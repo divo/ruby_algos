@@ -41,7 +41,7 @@ class BinNode
 
   private
   def insert_child(index, node)
-    if @children[index] == nil
+    if @children[index].nil?
       @children[index] = node
     else
       @children[index].insert(node)
@@ -51,4 +51,6 @@ end
 
 root = BinNode.new(5)
 root.insert(BinNode.new(4))
+root.insert(BinNode.new(6))
+root.insert(BinNode.new(9))
 puts root
