@@ -2,8 +2,11 @@ LEFT = 0
 RIGHT = 1
 # Binary Tree Node
 class BinNode
+  include Comparable
+
   @children
   @value
+  attr_reader :value
 
   def initialize(value)
     @value = value
@@ -25,7 +28,7 @@ class BinNode
   end
 
   def to_s
-    # TODO NEXT
+    "#{@value} -> Left: #{@children[LEFT].to_s} Right: #{@children[RIGHT].to_s}"
   end
 
   def height(level)
@@ -33,14 +36,19 @@ class BinNode
       return @children[LEFT].height(level + 1)
     elsif @children[RIGHT] != nil
       return @children[RIGHT].height(level + 1)
+    end
   end
 
   private
   def insert_child(index, node)
     if @children[index] == nil
-      @chilren[index] = node
+      @children[index] = node
     else
       @children[index].insert(node)
     end
   end
 end
+
+root = BinNode.new(5)
+root.insert(BinNode.new(4))
+puts root
