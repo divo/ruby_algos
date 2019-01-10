@@ -7,6 +7,7 @@ class BinNode
   @children
   @value
   attr_reader :value
+  attr_reader :children # for bfs
 
   def initialize(value)
     @value = value
@@ -65,6 +66,26 @@ class BinNode
     nil
   end
 
+  # REMEMBER: NOT RECURSIVE
+  def bfs(value)
+    q = Array.new()
+    q.push(self)
+
+    until q.empty?
+      node = q.shift
+      puts "#{node.value}"
+      if node.value == value
+        puts "Found #{value}" #Could return here if needed
+      end
+
+      node.children.each do |child|
+        unless child.nil?
+          q.push(child)
+        end
+      end
+    end
+  end
+
   # This isn't correct, need to visit every node
   def height(level = 1)
     if @children[LEFT] != nil
@@ -87,20 +108,21 @@ end
 root = BinNode.new(5)
 root.insert(BinNode.new(4))
 root.insert(BinNode.new(3))
-root.insert(BinNode.new(6))
 root.insert(BinNode.new(7))
+root.insert(BinNode.new(6))
 root.insert(BinNode.new(9))
 puts root
-puts root.traverse_tree
-puts root.dfs(9)
-puts ""
-puts root.dfs(3)
+#puts root.traverse_tree
+#puts root.dfs(9)
+#puts root.dfs(3)
+root.bfs(9)
+root.bfs(3)
 
 tree2 = BinNode.new(1)
 tree2.insert(BinNode.new(2))
 tree2.insert(BinNode.new(3))
 tree2.insert(BinNode.new(4))
 tree2.insert(BinNode.new(5))
-puts tree2
+#puts tree2
 
-puts tree2.traverse_tree
+#puts tree2.traverse_tree
