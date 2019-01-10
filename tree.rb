@@ -40,19 +40,26 @@ class BinNode
   end
 
   def dfs(value)
+    $found = false #This is a bit shit
+    _dfs(value)
+  end
+
+  $found = false
+  def _dfs(value)
+    if $found; return; end
+
     puts "#{@value}"
     if value == @value
       puts "Found #{value}"
       # Need to halt further calls
+      $found = true
       return self
     end
 
-    unless @children[LEFT].nil?
-      @children[LEFT].dfs(value)
-    end
-
-    unless @children[RIGHT].nil?
-      @children[RIGHT].dfs(value)
+    @children.each do |child|
+      unless child.nil?
+        child._dfs(value)
+      end
     end
 
     nil
