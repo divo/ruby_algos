@@ -27,11 +27,39 @@ class BinNode
     return @value <=> other.value
   end
 
+  # pre-order traversal
   def to_s
     "#{@value} -> Left: #{@children[LEFT].to_s} Right: #{@children[RIGHT].to_s}"
   end
 
-  def height(level)
+  #def in-order traversal
+  def traverse_tree
+    result = @children[LEFT].nil? ? "" : @children[LEFT].traverse_tree
+    result += ":LEFT <- #{@value} -> RIGHT:"
+    result += @children[RIGHT].nil? ? "" : @children[RIGHT].traverse_tree
+  end
+
+  def dfs(value)
+    puts "#{@value}"
+    if value == @value
+      puts "Found #{value}"
+      # Need to halt further calls
+      return self
+    end
+
+    unless @children[LEFT].nil?
+      @children[LEFT].dfs(value)
+    end
+
+    unless @children[RIGHT].nil?
+      @children[RIGHT].dfs(value)
+    end
+
+    nil
+  end
+
+  # This isn't correct, need to visit every node
+  def height(level = 1)
     if @children[LEFT] != nil
       return @children[LEFT].height(level + 1)
     elsif @children[RIGHT] != nil
@@ -51,6 +79,21 @@ end
 
 root = BinNode.new(5)
 root.insert(BinNode.new(4))
+root.insert(BinNode.new(3))
 root.insert(BinNode.new(6))
+root.insert(BinNode.new(7))
 root.insert(BinNode.new(9))
 puts root
+puts root.traverse_tree
+puts root.dfs(9)
+puts ""
+puts root.dfs(3)
+
+tree2 = BinNode.new(1)
+tree2.insert(BinNode.new(2))
+tree2.insert(BinNode.new(3))
+tree2.insert(BinNode.new(4))
+tree2.insert(BinNode.new(5))
+puts tree2
+
+puts tree2.traverse_tree
