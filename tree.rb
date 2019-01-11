@@ -6,12 +6,15 @@ class BinNode
 
   @children
   @value
+  @parent
   attr_reader :value
   attr_reader :children # for bfs
+  attr_accessor :parent # for insert, needed by delete
 
   def initialize(value)
     @value = value
     @children = Array.new(2)
+    @parent = nil
   end
 
   # Binary tree insert
@@ -21,6 +24,15 @@ class BinNode
       insert_child(LEFT, node)
     elsif node >= self
       insert_child(RIGHT, node)
+    end
+  end
+
+  def insert_child(index, node)
+    if @children[index].nil?
+      node.parent = self
+      @children[index] = node
+    else
+      @children[index].insert(node)
     end
   end
 
@@ -76,6 +88,7 @@ class BinNode
       puts "#{node.value}"
       if node.value == value
         puts "Found #{value}" #Could return here if needed
+        return node
       end
 
       node.children.each do |child|
@@ -95,13 +108,36 @@ class BinNode
     end
   end
 
-  private
-  def insert_child(index, node)
-    if @children[index].nil?
-      @children[index] = node
-    else
-      @children[index].insert(node)
+  def delete
+    children = @children.select { |child| !child.nil? }
+
+    if children.empty? # No children
+      @parent.delete_child(self)
     end
+
+    if children.count == 1 # One child. Replace self with child. Just using values here but who cares
+      @value = children.first.value
+      @children = Array.new(2)
+    end
+
+    if children.count == 2 # Two children. Need to replace self with left most value of right child
+      succ = find_succ
+      succ.parent.delete_child(succ)
+      @value = succ.value
+    end
+  end
+
+  def delete_child(node)
+    @children = @children.select { |child| child != node }
+  end
+
+  def find_succ
+    find_left_most(@children[RIGHT])
+  end
+
+  def find_left_most(node)
+    return node if node.children[LEFT].nil?
+    find_left_most(node.children[LEFT])
   end
 end
 
@@ -115,8 +151,13 @@ puts root
 #puts root.traverse_tree
 #puts root.dfs(9)
 #puts root.dfs(3)
-root.bfs(9)
-root.bfs(3)
+nine = root.bfs(9)
+four = root.bfs(4)
+#nine.delete
+#four.delete
+seven = root.bfs(7)
+seven.delete
+puts root
 
 tree2 = BinNode.new(1)
 tree2.insert(BinNode.new(2))
