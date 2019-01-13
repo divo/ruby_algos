@@ -3,7 +3,6 @@ def search(nums, target)
   right = nums.count - 1 #NOTE: This is important
 
   loop do
-    require 'byebug'; byebug
     return -1 if left > right
     middle = (left + right) / 2 #NOTE: THIS IS HOW TO MID POINT STOOGE
     subject = nums[middle]
