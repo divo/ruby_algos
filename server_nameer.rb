@@ -28,16 +28,19 @@ class NameFactory
   end
 end
 
-factory = NameFactory.new()
-puts factory.issue_name
-puts factory.issue_name
-puts factory.issue_name
-puts factory.issue_name
-puts factory
-puts factory.remove_name(5)
-factory.remove_name(1)
-factory.remove_name(3)
-puts factory
-puts factory.issue_name
-puts factory
-puts factory.issue_name
+def test
+  factory = NameFactory.new()
+  puts factory.issue_name
+  puts factory.issue_name
+  puts factory.issue_name
+  puts factory.issue_name
+  puts factory
+  puts factory.remove_name(5)
+  factory.remove_name(1)
+  factory.remove_name(3)
+  puts factory
+  puts factory.issue_name
+  puts factory
+  puts factory.issue_name
+end
+
