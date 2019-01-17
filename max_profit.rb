@@ -2,6 +2,34 @@
 
 def max_profit(prices)
   profits = profits(prices)
+  max_profits(profits)
+end
+
+def max_profits(profits)
+  result = Array.new()
+  profits[0].each_with_index do |row, i|
+    mx = 0
+    mx_idx = nil
+    
+    for j in 0...profits.count
+      if profits[j][i] > mx
+        mx = profits[j][i]
+        max_idx = j
+      end
+    end
+    
+    unless max_idx.nil?
+      # profits[mx_idx] = nil Cant do this, each isn't that smart
+
+      profits[max_idx].each { |val| val = 0 }
+      for i in 0..profits[max_idx].count 
+        profits[max_idx][i] = 0 
+      end
+      result.push mx
+    end
+  end
+  
+  result
 end
 
 def profits(prices)
@@ -9,18 +37,18 @@ def profits(prices)
   prices.each_with_index do |price, current|
     # First push on the nils
     row = Array.new()
-    (0..current).each { row.push nil }
-    prices[current + 1, prices.count].each do |x| # This is probably the wrong indices
+    (0..current).each { row.push 0 }
+    prices[current + 1, prices.count].each do |x|
       row.push(x - price)
     end
-
     print row
+    puts ""
     result.push row
   end
   result
 end
 
- max_profit([7,1,5,3,6,4])
+puts max_profit([7,1,5,3,6,4])
 # Output here is 7. Buy for 1, sell for 5, then buy for 3 and sell for 6
 # I think the best thing to do is brute force it? So there are N * N * N combinations. Hmmm
 # This is the same as the movies question. Find the max number of of non-overlapping durations
