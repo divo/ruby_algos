@@ -1,3 +1,5 @@
+# @param {Integer[]} prices
+# @return {Integer}
 # This is find the longest non-overlapping path
 
 def max_profit(prices)
@@ -7,7 +9,7 @@ end
 
 def max_profits(profits)
   result = Array.new()
-  profits[0].each_with_index do |row, i|
+  profits.each_with_index do |row, i|
     mx = 0
     mx_idx = nil
     
@@ -22,14 +24,15 @@ def max_profits(profits)
       # profits[mx_idx] = nil Cant do this, each isn't that smart
 
       profits[max_idx].each { |val| val = 0 }
-      for i in 0..profits[max_idx].count 
+      for i in 0...profits[max_idx].count 
         profits[max_idx][i] = 0 
       end
+      print result
       result.push mx
     end
   end
   
-  result
+  result.inject(0) { |sum, x| sum += x }
 end
 
 def profits(prices)
@@ -41,14 +44,12 @@ def profits(prices)
     prices[current + 1, prices.count].each do |x|
       row.push(x - price)
     end
-    print row
-    puts ""
     result.push row
   end
   result
 end
 
-puts max_profit([7,1,5,3,6,4])
+max_profit([7,1,5,3,6,4])
 # Output here is 7. Buy for 1, sell for 5, then buy for 3 and sell for 6
 # I think the best thing to do is brute force it? So there are N * N * N combinations. Hmmm
 # This is the same as the movies question. Find the max number of of non-overlapping durations
