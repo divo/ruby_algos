@@ -5,21 +5,19 @@ def first_uniq_char(s)
   # Or an array
   entry = Struct.new(:repeats, :index)
   visited = {}
-  s.split("").each_with_index do |c, i| 
-    if visited[c].nil?
-      visited[c] = entry.new(false, i)
-    else
-      e = visited[c]
+  s.split("").each_with_index do |c, i|
+    if e = visited[c]
       e.repeats = true
-      visited[c] = e
+    else
+      visited[c] = entry.new(false, i)
     end
   end
-  
+
   # Hashes in ruby preserve order so we can just iterate the keys to find the first
-  visited.keys.each do |key|
-    unless visited[key].repeats
-      return visited[key].index
-    end
+  visited.each do |key, value|
+    return value.index unless value.repeats
   end
   return -1
 end
+
+puts first_uniq_char('leetcode')
