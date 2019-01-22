@@ -8,7 +8,8 @@ describe NameFactory do
   end
 
   it "should issue multiple names" do
-    factory.issue_name == 1
+    expect(factory.issue_name).to eq 0
+    #factory.issue_name == 1
     factory.issue_name == 2
     factory == "1, 2," # Ruby is dynamic and smart enough to figure this out
   end
