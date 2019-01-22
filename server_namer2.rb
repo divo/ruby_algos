@@ -7,6 +7,7 @@ class NameFactory
 
   # Not using nils
   def issue_name
+    print @issued_names
     if @issued_names.empty?
       @issued_names.push 0
       return 0
@@ -17,17 +18,25 @@ class NameFactory
       if n == @issued_names.last
         @issued_names.push n.next
         return n.next
-      elsif n != @issued_names[i.next] - 1
-        @issued_names.push n
+      elsif n.next != @issued_names[i.next]
+        @issued_names.push n.next
         @issued_names = @issued_names.sort
-        return n
+        return n.next
       end
     end
+  end
+
+  def delete_name(n)
+    @issued_names.delete n
+    print @issued_names
   end
 
 end
 
 factory = NameFactory.new()
 puts factory.issue_name
+puts factory.issue_name
+puts factory.issue_name
+factory.delete_name(1)
 puts factory.issue_name
 puts factory.issue_name
