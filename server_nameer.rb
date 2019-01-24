@@ -43,4 +43,3 @@ def test
   puts factory
   puts factory.issue_name
 end
-

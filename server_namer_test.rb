@@ -4,14 +4,14 @@ describe NameFactory do
   let (:factory) { NameFactory.new() }
 
   it "should issue a name" do
-    factory.issue_name == 1
+    expect(factory.issue_name).to eq 0
   end
 
   it "should issue multiple names" do
     expect(factory.issue_name).to eq 0
-    #factory.issue_name == 1
-    factory.issue_name == 2
-    factory == "1, 2," # Ruby is dynamic and smart enough to figure this out
+    expect(factory.issue_name).to eq 1
+    expect(factory.issue_name).to eq 2
+    expect(factory.to_s).to eq "0, 1, 2, "
   end
 
   it "should handle invalid removal" do
@@ -21,7 +21,7 @@ describe NameFactory do
   it "should handle last name being removed" do
     factory.issue_name
     factory.remove_name(0)
-    factory == " "
+    expect(factory.to_s).to eq ", "
   end
 
   it "should handle names removed from middle" do
@@ -31,6 +31,6 @@ describe NameFactory do
     factory.issue_name
     factory.remove_name(1)
     factory.remove_name(3)
-    factory == "0, ,2 , "
+    expect(factory.to_s).to eq "0, , 2, , "
   end
 end
