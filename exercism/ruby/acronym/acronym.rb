@@ -1,9 +1,7 @@
 class Acronym
   def self.abbreviate(sentance)
     sentance.gsub('-', ' ')
-      .split(' ')
-      .map(&:chars)
-      .map(&:first)
+      .scan(/\b[a-zA-Z]/)
       .reduce(:+)
       .upcase
   end
