@@ -15,3 +15,7 @@ def majority_element(nums)
     
   majority_element
 end
+
+
+puts majority_element([2,3,3])
+
