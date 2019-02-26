@@ -1,6 +1,5 @@
 class Node
   attr_accessor :succ
-  @value
 
   def initialize(value)
     @value = value
