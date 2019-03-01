@@ -1,6 +1,6 @@
 class Parent
   def thing
-    work
+    self.work
     puts "parent"
   end
 
