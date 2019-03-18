@@ -7,10 +7,7 @@ class Series
   def slices(no)
     raise ArgumentError if no > @digits.count
     result = []
-    @digits.each_index do |i|
-      sequence = @digits[i, no]
-      result.push sequence.join if sequence.count == no
-    end
-    result.flatten
+    @digits.each_cons(no) { |seq| result.push(seq.join) }
+    result
   end
 end
