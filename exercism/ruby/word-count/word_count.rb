@@ -1,24 +1,20 @@
 # Class to count occurrences of individual words in a string
 class Phrase
+  WORD_REGEX = /\b[\w']+\b/
+
   def initialize(phrase)
-    @phrase = phrase.downcase.gsub(/[^a-z0-9'\s]/i, ' ')
+    @phrase = to_words(phrase)
   end
 
   def word_count
-    result = Hash.new(0)
-    @phrase.split.each do |word|
-      result[strip_quotes(word)] += 1
+    @phrase.each_with_object(Hash.new(0)) do |word, result|
+      result[word] += 1
     end
-    result
   end
 
   private
 
-  def strip_quotes(word)
-    if word[0] == "'" && word[-1] == "'"
-      word[1...word.length - 1]
-    else
-      word
-    end
+  def to_words(phrase)
+    phrase.downcase.scan(WORD_REGEX)
   end
 end
