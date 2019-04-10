@@ -3,9 +3,6 @@ class Hamming
     raise ArgumentError unless first.length == second.length
 
     pairs = first.chars.zip(second.chars)
-    count = 0
-    pairs.count do |left, right|
-      count += 1 if right != left
-    end
+    pairs.count { |l, r| r != l }
   end
 end
