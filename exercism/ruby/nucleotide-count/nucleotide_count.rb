@@ -18,11 +18,14 @@ class Nucleotide
   private
 
   def initialize(dna)
-    # Validate the dna. Could also pre-compute all the counts here
-    # and use that to validate
+    validate_nucleuotides! dna
+    @dna = dna.chars
+  end
+
+  # Validate the dna. Could also pre-compute all the counts here
+  # and use that to validate
+  def validate_nucleuotides!(dna)
     invalid = dna.chars.uniq - VALID_NUC
     raise ArgumentError unless invalid.empty?
-
-    @dna = dna.chars
   end
 end
