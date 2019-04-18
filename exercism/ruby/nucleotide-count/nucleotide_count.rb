@@ -6,12 +6,13 @@ class Nucleotide
   end
 
   def count(nuc)
-    @dna.count { |m| m == nuc }
+    @dna.count(nuc)
   end
 
   def histogram
-    VALID_NUC.inject({}) do |result, nuc|
-      result.update(nuc => count(nuc))
+    hash = VALID_NUC.inject({}) { |hash, nuc| hash[nuc] = 0; hash }
+    @dna.chars.each_with_object(hash) do |nuc, result|
+      result[nuc] += 1
     end
   end
 
@@ -19,7 +20,7 @@ class Nucleotide
 
   def initialize(dna)
     validate_nucleuotides! dna
-    @dna = dna.chars
+    @dna = dna
   end
 
   # Validate the dna. Could also pre-compute all the counts here
