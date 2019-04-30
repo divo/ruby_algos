@@ -10,7 +10,7 @@ class Nucleotide
   end
 
   def histogram
-    hash = VALID_NUC.inject({}) { |hash, nuc| hash[nuc] = 0; hash }
+    hash = VALID_NUC.to_h { |k| [k, 0] }
     @dna.chars.each_with_object(hash) do |nuc, result|
       result[nuc] += 1
     end
