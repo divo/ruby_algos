@@ -10,8 +10,7 @@ class Nucleotide
   end
 
   def histogram
-    hash = VALID_NUC.to_h { |k| [k, 0] }
-    @dna.chars.each_with_object(hash) do |nuc, result|
+    @dna.chars.each_with_object(nucleotide_hash) do |nuc, result|
       result[nuc] += 1
     end
   end
@@ -28,5 +27,9 @@ class Nucleotide
   def validate_nucleuotides!(dna)
     invalid = dna.chars.uniq - VALID_NUC
     raise ArgumentError unless invalid.empty?
+  end
+
+  def nucleotide_hash
+    VALID_NUC.to_h { |k| [k, 0] }
   end
 end
