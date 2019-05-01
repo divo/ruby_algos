@@ -30,6 +30,8 @@ class Nucleotide
   end
 
   def nucleotide_hash
-    VALID_NUCLEOTIDE.to_h { |k| [k, 0] }
+    hash = VALID_NUCLEOTIDE.to_h { |k| [k, 0] }
+    hash.default = 0
+    hash
   end
 end

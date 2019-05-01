@@ -50,4 +50,12 @@ class NucleotideTest < Minitest::Test
       Nucleotide.from_dna('JOHNNYAPPLESEED')
     end
   end
+
+  def test_invalid_data_histogram
+    assert_raises ArgumentError do
+      dna = Nucleotide.from_dna('JOHNNYAPPLESEED')
+      expected = { 'A' => 0, 'T' => 0, 'C' => 0, 'G' => 0 }
+      assert_equal expected, dna.histogram
+    end
+  end
 end
