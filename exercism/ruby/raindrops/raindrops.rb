@@ -8,23 +8,23 @@ class Raindrops
         3 => 'Pling',
         5 => 'Plang',
         7 => 'Plong'
-    }
+      }
 
     def convert(number, rules = RULES)
-      result = drops(number)
+      result = drops(number, rules)
       result.empty? ? number.to_s : result
     end
 
     private
 
-    def drops(number)
-      RULES.each_with_object("") do |(factor, sound), result|
+    def drops(number, rules)
+      rules.each_with_object('') do |(factor, sound), result|
         result << drop(number, factor, sound)
       end
     end
 
     def drop(number, factor, sound)
-      number % factor == 0 ? sound : ""
+      (number % factor).zero? ? sound : ''
     end
   end
 end
