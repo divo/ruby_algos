@@ -10,7 +10,7 @@ class Nucleotide
   end
 
   def histogram
-    @dna.chars.each_with_object(nucleotide_hash) do |n, result|
+    @dna.chars.each_with_object(nucleotides) do |n, result|
       result[n] += 1
     end
   end
@@ -29,7 +29,7 @@ class Nucleotide
     raise ArgumentError unless invalid.empty?
   end
 
-  def nucleotide_hash
+  def nucleotides
     hash = VALID_NUCLEOTIDE.to_h { |k| [k, 0] }
     hash.default = 0
     hash
