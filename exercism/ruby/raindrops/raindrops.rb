@@ -1,4 +1,4 @@
-class Raindrops
+module Raindrops
   RULES =
     {
       3 => 'Pling',
@@ -6,18 +6,16 @@ class Raindrops
       7 => 'Plong'
   }
 
-  def self.convert(number)
-    new(number).convert
+  def convert(number)
+    sound?(number) || number.to_s
   end
 
-  def initialize(number)
-    @number = number
-  end
-
-  def convert
-    result = RULES.each_with_object('') do |(factor, sound), result|
-      result << sound if (@number % factor).zero?
+  def sound?(number)
+    sound = RULES.each_with_object('') do |(factor, sound), result|
+      result << sound if (number % factor).zero?
     end
-    result.empty? ? @number.to_s : result
+    sound unless sound.empty?
   end
 end
+
+Raindrops.extend Raindrops
