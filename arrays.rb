@@ -108,6 +108,64 @@ a.combination(3).to_a  #=> [[1,2,3],[1,2,4],[1,3,4],[2,3,4]]
 # Deletes all instances of param
 # Returns nil OR executes passed block if noting found
 
+# Delete at
+['a', 'b', 'c'].delete_at(1) # ['a', 'c']
+# Deletes at the passed index
+
+# delete_if
+# same as reject!
+
+# dig
+a = [[1, [2, 3]]]
+a.dig(0, 1, 1) # 3
+# Extracts nested values specified by the squence of index values
+
+# drop
+a = [1, 2, 3, 4, 5, 0]
+a.drop(3) # [4, 5, 0]
+# Drops the first n elements in an array and returns remaining
+
+# drop_while
+a = [1, 2, 3, 4, 5]
+a.drop_while { |i| i < 3 } # [3, 4, 5]
+# Drop up to, but not including the first element for which the block returns true
+
+# each
+a = [1, 2, 3, 4]
+a.each { |x| print "#{x * 10}" } # 10 20 30 40; [1, 2, 3, 4]
+# Executes the block for every element, returns the array itself
+
+# empty?
+[].empty # true
+# Returns true if the array contains no elements
+
+# fetch
+a = [1, 2, 3, 4, 5]
+a.fetch(1) # 2
+a.fetch(200) # Throws
+a.fetch(200, 0) # 0
+# Get element at index, throw if not found. Second arg is a default value to return.
+
+# fill
+a = [1, 2, 3, 4]
+a.fill('x') # ['x', 'x', 'x', 'x']
+a.fill { |x| x * 2 } # [2, 4, 6, 8]
+# Fill the array with arg. Can be given a range or block. Modified in place
+
+# find_index
+a = [0, 2, 4, 6, 8, 10]
+a.find_index(4) # 2
+a.index(4) # 2
+# Finds the index of th first item that matches param. Can also be passed a block
+# Same as index
+
+# first
+a = [1, 2, 3, 4, 5]
+a.first # 1
+a.first(2) # [1, 2]
+# Returns the first element of the array or the first n elements
+
+
 
 
 
