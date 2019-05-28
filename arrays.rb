@@ -78,11 +78,14 @@ arr.drop_while { |a| a < 4 } #=> [4, 5, 6]
 [ "a", "a", "c" ]    <=> [ "a", "b", "c" ]   #=> -1
 [ 1, 2, 3, 4, 5, 6 ] <=> [ 1, 2 ]            #=> +1
 # Arrays compared element by element. First two non equal elements are the result of the compare
+# Key thing is here the Arrays are compared by calling <=> on the elements within, so these elemets need to provde <=>
 
 # Abbreviations
 %w{ car cone }.abbrev
 #=> {"ca" => "car", "con"=>"cone", "co" => "cone", "car"=>"car", "cone" => "cone"}
 # Calculte the set of abbreviations for the strings in self
+
+#Collect, see map
 
 # Combinations
 a = [1, 2, 3, 4]
@@ -95,8 +98,15 @@ a.combination(3).to_a  #=> [[1,2,3],[1,2,4],[1,3,4],[2,3,4]]
 [ "a", nil, "b", nil, "c", nil ].compact #=> [ "a", "b", "c" ]
 # Remove all nils, also has compact!
 
+# Count
+[1, 2, 3, 4].count # 4
+[1, 2, 3, 4].count { |x| x % 2 == 0 } # 2
+# If given a block it return the number of elements for which the block return true
 
-
+# Delete
+['a', 'b', 'b', 'b', 'c'].delete('b') # ['a', 'c']
+# Deletes all instances of param
+# Returns nil OR executes passed block if noting found
 
 
 
