@@ -12,7 +12,7 @@ a2.each { |a| print a.object_id.to_s  + " " }
 
 arr = ['a', 'b', 'c', 'd', 'e', 'f']
 arr[100] # = nil
-arr[100] # throws IndexError
+arr.fetch(100) # throws IndexError
 
 arr.take(3) # ['a', 'b', 'c']
 arr.drop(2) # ['c']
@@ -43,7 +43,7 @@ arr #=> [2, 3, 5]
 
 # Delete an elements
 arr = [1, 2, 2, 3]
-arr.delete(2) #=> [1, 3]
+
 
 # Remove nils
 arr = ['foo', 0, nil, 'bar', 7, 'baz', nil]
@@ -52,11 +52,11 @@ arr.compact  #=> ['foo', 0, 'bar', 7, 'baz']
 
 
 # Selecting
-arr = [1, 2, 3, 4, 5]
+[arr = [1, 2, 3, 4, 5]
 arr.select { |a| a > 3 } # [4, 5]
 arr.reject { |a| a < 3 } # [3, 4, 5]
 arr.drop_while { |a| a < 4 } #=> [4, 5, 6]
-# select! and reject! also
+# select! and reject! also]
 
 # Intersect
 [1, 2, 3] & [3, 4, 5] # [3]
@@ -75,12 +75,13 @@ arr.drop_while { |a| a < 4 } #=> [4, 5, 6]
 [ 1, 2 ] << "c" << "d" << [ 3, 4 ] #=>  [ 1, 2, "c", "d", [ 3, 4 ] ]
 
 # Compare
-[ "a", "a", "c" ]    <=> [ "a", "b", "c" ]   #=> -1
+[ "a", "a", "c" ]  <=> [ "a", "b", "c" ]   #=> -1
 [ 1, 2, 3, 4, 5, 6 ] <=> [ 1, 2 ]            #=> +1
 # Arrays compared element by element. First two non equal elements are the result of the compare
 # Key thing is here the Arrays are compared by calling <=> on the elements within, so these elemets need to provde <=>
 
 # Abbreviations
+require 'abbrev'
 %w{ car cone }.abbrev
 #=> {"ca" => "car", "con"=>"cone", "co" => "cone", "car"=>"car", "cone" => "cone"}
 # Calculte the set of abbreviations for the strings in self
