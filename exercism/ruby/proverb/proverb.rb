@@ -7,9 +7,8 @@ class Proverb
 
   def to_s
     # Need to iterate and take two
-    result = ""
-    @list[1, @list.count].each_index do |i|
-      result << template(@list[i], @list[i + 1])
+    result = @list.each_cons(2).inject("") do |result, (first, second)|
+      result << template(first, second)
     end
     result << end_template(@list.first, @qualifier)
   end
