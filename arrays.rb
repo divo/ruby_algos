@@ -166,6 +166,104 @@ a.first # 1
 a.first(2) # [1, 2]
 # Returns the first element of the array or the first n elements
 
+# flatten
+[ 4, 5, 6, [7, 8] ].flatten # [4, 5, 6, 7, 8]
+# Return a new one dimensional array
+# also has flatten!
+# can specify arg for number of levels
+
+# frozen?
+# Returns true if the array is forzen
+
+# hash
+# Return the hash-code for an array, computed from it's elements
+
+# include?
+a = ['a', 'b', 'c']
+a.include?("b") # true
+# True if any element == arg
+
+# insert
+a = %w[a b c d]
+a.insert(2, 99) # ["a", "b", 99, "c", "d"]
+# Insert the value before the given index
+
+# inspecet
+[ "a", "b", "c" ].to_s #=> "[\"a\", \"b\", \"c\"]"
+# Create a string representation
+
+# join
+['a', 'b', 'c'].join # abc
+['a', 'b', 'c'].join('-') # a-b-c
+# Converts every element to string and joins them using arg, or "". ($ is used if set)
+
+# keep_if
+a = %w{ a b c d e f }
+a.keep_if { |v| v =~ /[aeiou]/ }  #=> ["a", "e"]
+# Delets every element for which the block evaluates to false
+
+# last
+[1, 2, 3, 4].last # 4
+# Returns the last element, or nil if empty
+
+# length / size
+# Returns the number of elements. Cannot be passed a block like 'count'
+# Use one of these normally, use 'count' when you want some count logic
+
+# map
+a = [ "a", "b", "c", "d" ]
+a.map { |x| x + "!" } # ["a!", "b!", "c!", "d!"]
+# Invokes the block once for each element, creates a new array containing the returned values
+# map! to replace inplace
+
+# pack
+# Packs the contents into a binary sequence according to passed directives.
+# Has an argument list as long as my arm, forgetaboutit
+
+# permutation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
