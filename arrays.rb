@@ -326,6 +326,33 @@ a.sort { |x,y| y <=> x }  #=> ["e", "d", "c", "b", "a"]
 # (it sorts the keys returned using <=>
 # sort_by! is also a thing
 
+# take
+a = [1, 2, 3, 4, 5, 0]
+a.take(2) # [1, 2]
+a == [1, 2, 3, 4, 5, 0]
+# Return the first n elements
+
+# take_while
+a = [1, 2, 3, 4, 5, 0]
+a.take_while { |i| i < 3 }  #=> [1, 2]
+# Passes elements to the block until the return nil/false, then all prior elements are returned
+
+# to_h
+[[:foo, :bar], [1, 2]].to_h # => {:foo => :bar, 1 => 2}
+# Returns ary interpolated as a set of key/value pairs.
+# Array must be in this form or it will throw
+
+# transpose
+a = [[1,2], [3,4], [5,6]]
+a.transpose   #=> [[1, 3, 5], [2, 4, 6]]
+# Assumes array is array of arrays and swaps the cols/rows
+# Array must be square
+
+# uniq
+a = [ "a", "a", "b", "b", "c" ]
+a.uniq   # => ["a", "b", "c"]
+# returns new array with duplicates removed. Uses the elements hash method .eql?
+
 
 
 
