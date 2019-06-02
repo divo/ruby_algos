@@ -352,9 +352,26 @@ a.transpose   #=> [[1, 3, 5], [2, 4, 6]]
 a = [ "a", "a", "b", "b", "c" ]
 a.uniq   # => ["a", "b", "c"]
 # returns new array with duplicates removed. Uses the elements hash method .eql?
+# uniq! also exists
 
+# unshift
+a = [ "b", "c", "d" ]
+a.unshift("a")   #=> ["a", "b", "c", "d"]
+# Prepend the objects to the array, moving the other elements _upwards_
 
+# values_at
+a = %w{ a b c d e f }
+a.values_at(1, 3, 5)          # => ["b", "d", "f"]
+a.values_at(4..6, 3...6)      # => ["e", "f", nil, "d", "e", "f"]
+# Returns an array of values given by the selectors
 
+# zip
+['a', 'b', 'c'].zip([1, 2], [8]) # [["a", 1, 8], ["b", 2, nil], ["c", nil, nil]]
+# Merge self with corrisponding elements of arg arrays (Arguments are converted to arrays)
+
+# union
+[ "a", "b", "c" ] | [ "c", "d", "a" ]    #=> [ "a", "b", "c", "d" ]
+# Set union, return new array that is union of the two
 
 
 
