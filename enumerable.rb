@@ -110,7 +110,41 @@ a.cycle(2) { |x| puts x }  # print, a, b, c, a, b, c.
 # Retruns a hash where the keys result form the block. Groups elements with the same keys
 
 # include?
-1..7).include? 6 #=> true
+(1..7).include? 6 #=> true
 # Returns true if any element == arg
+
+# inject
+# Combine all the elements by applying a binary operation.
+(5..10).inject { |sum, n| sum + n }            #=> 45
+# If block is specified the block is passed an accumulator (memo) and the element.
+(5..10).reduce(1, :*)                          #=> 151200
+# If symbol passed each element element will be passed to that method on memo
+(5..10).reduce(:+)                             #=> 45
+# If you do not specifiy an inital value for memo the the first element of the collection is used
+
+# lazy
+# Returns a lazy enumerator whos various methods only evaluate values on an as-needed basis.
+# Something I need to look back over, probably useful in Ruby with nested enumerators
+
+# map
+(1..4).map { |i| i*i }      #=> [1, 4, 9, 16]
+# returns a new array with the results of running block for every element
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
