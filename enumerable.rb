@@ -130,14 +130,50 @@ a.cycle(2) { |x| puts x }  # print, a, b, c, a, b, c.
 (1..4).map { |i| i*i }      #=> [1, 4, 9, 16]
 # returns a new array with the results of running block for every element
 
+# max/min
+# returns the maximum/minimum value in enum using <=>, or as determined by block
+# can also be passed a number to get the n max elements
 
+# max_by/min_by
+# Like max/min but calculated on the block results
 
+# member?
+# alias for include?
 
+# minmax
+# minmax_by
+# Returns two element array of [max, min]
 
+# none?
+[nil, false].none?                                 #=> true
+[nil, false, true].none?                           #=> false
+# Returns true if the block never returns true. A bit of a wiff of unless about it
 
+# one
+%w{ant bear cat}.one? { |word| word.length == 4 }  #=> true
+%w{ant bear cat}.one? { |word| word.length < 4 }   #=> false
+# Returns true if the block returns true _once_
 
+# partition
+(1..6).partition { |v| v.even? }  #=> [[2, 4, 6], [1, 3, 5]]
+# [[select], [reject]]
 
+# reduce, alas for inject
 
+# slice_after
+%w[a ab abc acc abcd].slice_after(/ab/).to_a #=> [["a", "ab"], ["abc"], ["acc", "abcd"]]
+# Create an enumerator for each of the chunked elements, the _end_ of the chunks being defined by pattern
+
+# slice_before
+%w[a ab abc acc abcd].slice_before(/b/).to_a #=> [["a"], ["ab"], ["abc", "acc"], ["abcd"]]
+# As slice_after, but begining of chunks defined by pattern
+
+# slice_when
+a = [1,2,4,9,10,11,12,15,16,19,20,21]
+b = a.slice_when {|i, j| i+1 != j }
+p b.to_a #=> [[1, 2], [4], [9, 10, 11, 12], [15, 16], [19, 20, 21]]
+# creates the slices when the block returns true
+# block is passed | elt_before, elt_after |
 
 
 
