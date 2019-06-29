@@ -4,8 +4,9 @@ class Scrabble
   end
 
   def score
-    @word.chars.count do |char|
-      points[char]
+    return 0 unless @word && !@word.empty?
+    @word.chars.inject(0) do |sum, char|
+      sum += points[char]
     end
   end
 
