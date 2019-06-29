@@ -5,7 +5,7 @@ class Scrabble
 
   def score
     return 0 unless @word && !@word.empty?
-    @word.chars.inject(0) do |sum, char|
+    @word.chars.each_with_object(0) do |char, sum|
       sum += points[char]
     end
   end
