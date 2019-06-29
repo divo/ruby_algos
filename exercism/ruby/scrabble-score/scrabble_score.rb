@@ -3,14 +3,18 @@ class Scrabble
     @word = word
   end
 
-  def score
-    return 0 unless @word && !@word.empty?
-    @word.chars.each_with_object(0) do |char, sum|
-      sum += points[char]
+  def score(word = @word)
+    self.class.score(word)
+  end
+
+  def self.score(word)
+    return 0 unless word && !word.empty?
+    word.chars.sum do |char|
+      points[char.upcase]
     end
   end
 
-  def points
+  def self.points
     points  = {  "A"=>1, "B"=>3, "C"=>3, "D"=>2,
                  "E"=>1, "F"=>4, "G"=>2, "H"=>4,
                  "I"=>1, "J"=>8, "K"=>5, "L"=>1,
