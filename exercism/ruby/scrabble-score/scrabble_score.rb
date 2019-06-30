@@ -9,9 +9,7 @@ class Scrabble
 
   def self.score(word)
     return 0 unless word && !word.empty?
-    word.chars.sum do |char|
-      points[char.upcase]
-    end
+    word.chars.sum { |char| points[char.upcase] }
   end
 
   def self.points
