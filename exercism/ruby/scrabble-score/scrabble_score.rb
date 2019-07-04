@@ -14,10 +14,14 @@ class Scrabble
     @word = word
   end
 
-  def score(word = @word)
-    return 0 unless word
+  def score
+    return 0 unless @word
 
-    word.chars.sum { |char| POINTS[char.upcase] }
+    tiles(@word).sum { |char| POINTS[char] }
+  end
+
+  def tiles(word)
+    word.upcase.chars
   end
 
   def self.score(word)
