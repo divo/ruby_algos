@@ -21,7 +21,7 @@ class Luhn
     def is_luhn?(id)
       digits = id.chars.map(&:to_i)
       result = []
-      digits.each_slice(2) do |first, second|
+      digits.reverse.each_slice(2) do |first, second|
         result << first
         result << double_in_place(second)
       end
