@@ -2,7 +2,10 @@ class Luhn
   class << self
     def valid?(id)
       return false if (id = validate_input(id)).nil?
-      is_luhn?(id)
+
+      digits = to_i_a(id)
+      digits = double_every_second(digits)
+      is_luhn?(digits)
     end
 
     def validate_input(id)
@@ -14,17 +17,11 @@ class Luhn
       end
     end
 
-    def is_luhn?(id)
-      digits = to_i_a(id)
-      result = thing(digits)
-      result.compact.sum % 10 == 0
-    end
-
     def to_i_a(string)
       string.chars.map(&:to_i)
     end
 
-    def thing(digits)
+    def double_every_second(digits)
       result = []
       digits.reverse.each_slice(2) do |first, second|
         result << first
@@ -41,6 +38,10 @@ class Luhn
         result = result - 9
       end
       result
+    end
+
+    def is_luhn?(digits)
+      digits.compact.sum % 10 == 0
     end
   end
 end
