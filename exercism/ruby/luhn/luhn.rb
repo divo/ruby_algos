@@ -4,17 +4,22 @@
 class Luhn
   class << self
     def valid?(id)
-      return false if (id = validate_input(id)).nil?
+      return false unless (id = validate_input(id))
 
       digits = to_i_a(id)
       digits = double_every_second(digits)
       luhn?(digits)
     end
 
+    # Question: Would it be better to return nil here?
+    # false and a string are two different value types,
+    # which seems like a confusing thing for a method to do.
+    # On the other hand returning nil forces the caller to 
+    # type check the result, not just look at the value
     def validate_input(id)
       id.delete!(' ')
       if id.match(/^(\d)+$/).nil? || id.length <= 1
-        nil
+        false
       else
         id
       end
@@ -36,7 +41,7 @@ class Luhn
     end
 
     def double_in_place(number)
-      return nil if number.nil? # Handle odd number of digits
+      return nil unless number # Handle odd number of digits
 
       result = number * 2
       result -= 9 if result > 9
