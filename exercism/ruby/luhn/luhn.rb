@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Luhn checks if a string is a valid Luhn
 class Luhn
   class << self
     def valid?(id)
@@ -5,7 +8,7 @@ class Luhn
 
       digits = to_i_a(id)
       digits = double_every_second(digits)
-      is_luhn?(digits)
+      luhn?(digits)
     end
 
     def validate_input(id)
@@ -21,6 +24,7 @@ class Luhn
       string.chars.map(&:to_i)
     end
 
+    # TODO: Clean this up
     def double_every_second(digits)
       result = []
       digits.reverse.each_slice(2) do |first, second|
@@ -33,15 +37,14 @@ class Luhn
 
     def double_in_place(number)
       return nil if number.nil? # Handle odd number of digits
+
       result = number * 2
-      if result > 9
-        result = result - 9
-      end
+      result -= 9 if result > 9
       result
     end
 
-    def is_luhn?(digits)
-      digits.compact.sum % 10 == 0
+    def luhn?(digits)
+      (digits.compact.sum % 10).zero?
     end
   end
 end
