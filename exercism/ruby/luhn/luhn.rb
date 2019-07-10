@@ -11,11 +11,12 @@ class Luhn
       luhn?(digits)
     end
 
-    # Question: Would it be better to return nil here?
+    # Question for mentor: Would it be better to return nil here?
     # false and a string are two different value types,
     # which seems like a confusing thing for a method to do.
     # On the other hand returning nil forces the caller to 
     # type check the result, not just look at the value
+    # Which is more idiomatic?
     def validate_input(id)
       id.delete!(' ')
       if id.match(/^(\d)+$/).nil? || id.length <= 1
@@ -29,15 +30,10 @@ class Luhn
       string.chars.map(&:to_i)
     end
 
-    # TODO: Clean this up
     def double_every_second(digits)
-      result = []
-      digits.reverse.each_slice(2) do |first, second|
-        result << first
-        result << double_in_place(second)
+      digits.reverse.each_slice(2).flat_map do |first, second|
+        [first, double_in_place(second)]
       end
-
-      result
     end
 
     def double_in_place(number)
