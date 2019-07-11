@@ -15,12 +15,11 @@ class Scrabble
   attr_reader :word
   def initialize(word)
     @word = word
-    @score = score
   end
 
   def score
     return 0 unless @word
-    tiles.sum(&LETTER_TO_SCORE)
+    @score ||= tiles.sum(&LETTER_TO_SCORE)
   end
 
   def tiles
