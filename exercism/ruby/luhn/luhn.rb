@@ -4,26 +4,16 @@
 class Luhn
   class << self
     def valid?(id)
-      return false unless (id = validate_input(id))
+      id.delete!(' ')
+      return false unless valid_input?(id)
 
       digits = to_i_a(id)
       digits = double_every_second(digits)
       luhn?(digits)
     end
 
-    # Question for mentor: Would it be better to return nil here?
-    # false and a string are two different value types,
-    # which seems like a confusing thing for a method to do.
-    # On the other hand returning nil forces the caller to 
-    # type check the result, not just look at the value
-    # Which is more idiomatic?
-    def validate_input(id)
-      id.delete!(' ')
-      if id.match(/^(\d)+$/).nil? || id.length <= 1
-        false
-      else
-        id
-      end
+    def valid_input?(id)
+      !!id.match(/^(\d)+$/) && id.length > 1
     end
 
     def to_i_a(string)
