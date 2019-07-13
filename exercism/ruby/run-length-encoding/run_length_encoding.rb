@@ -13,9 +13,14 @@ class RunLengthEncoding
     end
 
     def decode(string)
-      # Chunk into nos and chars, then each_cons it
-      chunks = string.chars.chunk { |x| number?(x) }
-      require 'byebug'; byebug;
+      chunks = string.chars.chunk_while { |x, _| number?(x) }
+      # TODO: Clean this up
+      result = chunks.map do |chunk|
+        char = chunk.pop
+        count = chunk.join.to_i
+        char * count
+      end
+      result.join
     end
 
     def number?(x)
