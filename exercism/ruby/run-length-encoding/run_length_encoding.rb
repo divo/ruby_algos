@@ -19,7 +19,7 @@ class RunLengthEncoding
     def expand(chunk)
       if chunk.length == 1
         chunk.pop
-      else # chunk is a digit and character
+      else
         char = chunk.pop
         count = chunk.join.to_i
         char * count
