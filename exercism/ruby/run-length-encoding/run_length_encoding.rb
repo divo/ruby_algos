@@ -2,24 +2,21 @@
 class RunLengthEncoding
   class << self
     def encode(string)
-      return '' if string.empty?
-
-      groups = string.chars.chunk_while { |x, y| x == y }
-      result = groups.map do |group|
-        length = group.length > 1 ? group.length : nil
-        "#{length}#{group.first}"
-      end
-      result.join
+      chunks = chunk_string(string) { |x, y| x == y }
+      chunks.map { |chunk| compress(chunk) }.join
     end
 
     def decode(string)
-      chunks = string.chars.chunk_while { |x, _| number?(x) }
-      # TODO: Clean this up
-      result = chunks.map(&:thing)
-      result.join
+      chunks = chunk_string(string) { |x, _| number?(x) }
+      chunks.map { |chunk| expand(chunk) }.join
     end
 
-    def thing(chunk)
+    def compress(chunk)
+      length = chunk.length > 1 ? chunk.length : nil
+      "#{length}#{chunk.first}"
+    end
+
+    def expand(chunk)
       if chunk.length == 1
         chunk.pop
       else # chunk is a digit and character
@@ -31,6 +28,10 @@ class RunLengthEncoding
 
     def number?(x)
       x == x.to_i.to_s
+    end
+
+    def chunk_string(string, &condition)
+      string.chars.chunk_while(&condition)
     end
   end
 end
