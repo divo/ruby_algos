@@ -16,9 +16,14 @@ class RunLengthEncoding
       chunks = string.chars.chunk_while { |x, _| number?(x) }
       # TODO: Clean this up
       result = chunks.map do |chunk|
-        char = chunk.pop
-        count = chunk.join.to_i
-        char * count
+        # If chunk len == 1, single character
+        if chunk.length == 1
+          chunk.pop
+        else # chunk is a digit and character
+          char = chunk.pop
+          count = chunk.join.to_i
+          char * count
+        end
       end
       result.join
     end
