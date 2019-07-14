@@ -3,12 +3,12 @@ class RunLengthEncoding
   class << self
     def encode(string)
       chunks = chunk_string(string) { |x, y| x == y }
-      chunks.map { |chunk| compress(chunk) }.join
+      map(chunks, &:compress)
     end
 
     def decode(string)
       chunks = chunk_string(string) { |x, _| number?(x) }
-      chunks.map { |chunk| expand(chunk) }.join
+      map(chunks, &:expand)
     end
 
     def compress(chunk)
@@ -32,6 +32,10 @@ class RunLengthEncoding
 
     def chunk_string(string, &condition)
       string.chars.chunk_while(&condition)
+    end
+
+    def map(chunks)
+      chunks.map { |chunk| yield(self, chunk) }.join
     end
   end
 end
