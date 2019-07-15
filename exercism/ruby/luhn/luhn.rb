@@ -17,8 +17,8 @@ class Luhn
     @valid ||=
       begin
         digits = convert(@candidate)
-        digits = double_every_second(digits)
-        luhn?(digits)
+        sum = sum(digits)
+        luhn?(sum)
       end
   end
 
@@ -32,21 +32,21 @@ class Luhn
     string.chars.map(&:to_i)
   end
 
-  def double_every_second(digits)
-    digits.reverse.each_slice(2).flat_map do |first, second|
-      [first, double_in_place(second)]
+  def sum(digits)
+    digits.reverse.each_slice(2).sum do |first, second|
+      first + double_in_place(second)
     end
   end
 
   def double_in_place(number)
-    return nil unless number # Handle odd number of digits
+    return 0 unless number # Handle odd number of digits
 
     result = number * 2
     result -= 9 if result > 9
     result
   end
 
-  def luhn?(digits)
-    (digits.compact.sum % 10).zero?
+  def luhn?(sum)
+    (sum % 10).zero?
   end
 end
