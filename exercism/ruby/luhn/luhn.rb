@@ -6,7 +6,6 @@ class Luhn
     new(candidate).valid?
   end
 
-  # Rubys love of instance state is a bit confusing to me
   def initialize(candidate)
     @candidate = candidate.delete(' ')
   end
