@@ -5,6 +5,7 @@ class Clock
     @minute = minute
   end
 
+  # TODO: Left off at line 228, negative hour
   def to_s
     minute = format_minute(@minute)
     "#{format_hour(@hour)}:#{minute}"
