@@ -16,6 +16,10 @@ class Clock
     self.class.new(hour: @hour + other.hour, minute: @minute + other.minute)
   end
 
+  def -(other)
+    self.class.new(hour: @hour - other.hour, minute: @minute - other.minute)
+  end
+
   private
 
   def format_hour(hour)
