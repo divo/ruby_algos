@@ -212,7 +212,9 @@ class ClockTest < Minitest::Test
   end
 
   def test_clocks_with_hour_overflow
-    
+    # And it is here I realise I probably need to correct the hours and minutes
+    # on initialization.
+    # So on init figure out any overflow in minutes, then discard any overflow in hours
     clock1 = Clock.new(hour: 10, minute: 37)
     clock2 = Clock.new(hour: 34, minute: 37)
     assert clock1 == clock2
