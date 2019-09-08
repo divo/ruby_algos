@@ -1,23 +1,28 @@
 class Clock
 
+  attr_reader :hour, :minute
+
   def initialize(hour: 0, minute: 0)
     @hour = hour
     @minute = minute
   end
 
-  # TODO: Left off at line 228, negative hour
   def to_s
     minute = format_minute(@minute)
     "#{format_hour(@hour)}:#{minute}"
+  end
+
+  def +(other)
+    self.class.new(hour: @hour + other.hour, minute: @minute + other.minute)
   end
 
   private
 
   def format_hour(hour)
     case hour
-    when 0..10
+    when 0..9
       "0#{hour}"
-    when 11..23
+    when 10..23
       hour.to_s
     else
       format_hour(hour % 24)
@@ -26,9 +31,9 @@ class Clock
 
   def format_minute(minute)
     case minute
-    when 0..10
+    when 0..9
       "0#{minute}"
-    when 11..59
+    when 10..59
       minute.to_s
     else
       # Division will provide the number of hours
