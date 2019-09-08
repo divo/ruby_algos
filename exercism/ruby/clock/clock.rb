@@ -20,6 +20,18 @@ class Clock
     self.class.new(hour: @hour - other.hour, minute: @minute - other.minute)
   end
 
+  def <=>(other)
+    total_minutes <=> other.total_minutes
+  end
+
+  def ==(other)
+    (self <=> other).zero?
+  end
+
+  def total_minutes
+    (hour * 60) + minute
+  end
+
   private
 
   def format_hour(hour)
