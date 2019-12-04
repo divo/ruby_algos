@@ -21,3 +21,16 @@ end
 puts "Testing string".size
 using StringRefinment
 puts "Testing string".size
+
+module ExplicitString
+  def length
+    super > 5 ? 'many' : 'few'
+  end
+end
+
+String.class_eval do
+  prepend ExplicitString
+end
+
+
+puts "Testing string".length # => 'many'
