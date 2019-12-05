@@ -4,4 +4,10 @@ def explore_array(method)
   eval code
 end
 
-loop { puts explore_array(gets.chomp()) }
+# Requires some parsing to break the method and args apart
+def explore_array_dispatch(method, *args)
+  ['a', 'b', 'c'].send(method, *args)
+end
+
+#loop { puts explore_array(gets.chomp()) }
+loop { puts explore_array_dispatch(gets.chomp()) }
