@@ -1,9 +1,9 @@
 # The one without eval
 # Part 2
-def add_checked_attribute(klass, attribute)
+def add_checked_attribute(klass, attribute, &validation)
   klass.class_eval do
     define_method "#{attribute}=" do |value|
-      raise unless value
+      raise unless validation.call(value)
       instance_variable_set("@#{attribute}", value)
     end
 
@@ -15,7 +15,7 @@ end
 
 class Test; end
 
-add_checked_attribute(Test, :x)
+add_checked_attribute(Test, :x) { |x| x <= 6 }
 test = Test.new
 test.x = 3
-#test.x = nil
+test.x = 10
