@@ -1,15 +1,15 @@
 module Nodule
-  def test
+  def test(*args)
     puts 'module'
     super
   end
 end
 
 class Klass
-  def test(arg)
-    puts "test #{arg}"
+  def test
+    puts "test"
   end
 end
 
 Klass.prepend(Nodule)
-Klass.new.test('hi') # Raises, Nodule#test needs args
+Klass.new.test # Raises, Nodule#test needs args
