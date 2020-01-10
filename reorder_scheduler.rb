@@ -1,4 +1,4 @@
-tasks = ["A","A","B","B","B"]
+tasks = ["A","A","A","A","A","A","B","C","D","E","F","G"]
 n = 2
 
 def least_interval(tasks, n)
@@ -12,7 +12,7 @@ def least_interval(tasks, n)
     sorted_tasks = sorted_counts(tasks)
 
     until sorted_tasks.empty?
-      task = sorted_tasks.pop
+      task = sorted_tasks.shift
       name = task.keys.first
       seen_at = last_seen[name]
       if seen_at == nil
