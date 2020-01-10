@@ -15,7 +15,7 @@ def least_interval(tasks, n)
       task = sorted_tasks.shift
       name = task.keys.first
       seen_at = last_seen[name]
-      if seen_at == nil
+      if seen_at == nil || position - seen_at.next >= n
         # Schedule it
         tasks.delete_at(tasks.index(name))
         result << name
@@ -26,12 +26,6 @@ def least_interval(tasks, n)
           result << "_"
         end
         # If not enough time has gone by go again
-      else
-        # Enough time has elapsed
-        tasks.delete_at(tasks.index(name))
-        result << name
-        last_seen[name] = position
-        break
       end
     end
     position += 1
