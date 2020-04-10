@@ -26,6 +26,21 @@ class TestWithBlocks
   end
 end
 
+class SuperClass
+  def test
+    if block_given?
+      yield
+    else
+      "no block"
+    end
+  end
+end
+
+class SubClass < SuperClass
+  define_method :test do |*args, &block|
+    super(*args, &block)
+  end
+end
 
 puts Test.new.one 10
 puts Test.new.two 20
@@ -33,3 +48,5 @@ puts Test.new.three 30
 
 puts TestWithBlocks.new.test { "hello" }
 puts TestWithBlocks.new.test
+
+puts SubClass.new.test { "super block" }
