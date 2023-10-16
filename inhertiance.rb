@@ -21,3 +21,9 @@ class Child < Parent
 end
 
 Child.new().thing
+
+def NewThing
+  def hi
+    puts "This is me pissing about in VR, It's just ok"
+  end
+end
