@@ -3,8 +3,11 @@ def double(callable_object)
   callable_object.call * 2
 end
 
-l = lambda { return 10 }
-puts double(l) # 20
+l = lambda { |x| x * 2 }
+l.call(5) # 10
+
+l2 = ->(x) { x * 2 }
+l.call(5) # 10
 
 # In a proc it returns out of the scope the proc was defined in!
 def another_double
