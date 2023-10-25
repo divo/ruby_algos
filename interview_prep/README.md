@@ -7,3 +7,9 @@ Naive solution is N^2 and pretty easy to figure out. Only trick regarding `each_
 O(n) solution builds a hash of the input and then iterates the numbers looking for the current compliment in the hash.
 
 I gather the "real" interview way is to use two pointers coming from each end of the array. If the result is lower than target, increment the right pointer, if the result is higher decrement the left pointer.
+
+## valid_parens.swift
+Fairly simple stack question for matching paires of braces. My low-level Swift knowledge is very rusty.
+
+You don't need a base case for the first character.
+
