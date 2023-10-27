@@ -1,5 +1,22 @@
 # NOTE: This requires leetcode permium, which I don't have
 def shortest_distance(words, word1, word2)
+  l, r = -1, -1
+
+  words.each_with_index do |word, idx|
+    if word1 == word
+      l = idx
+    elsif word2 == word
+      r = idx
+    end
+
+    break unless l == -1 || r == -1
+  end
+
+  (l - r).abs
+end
+
+
+def shortest_distance_2n(words, word1, word2)
   l, r = 0, words.length - 1
 
   while l < words.length
