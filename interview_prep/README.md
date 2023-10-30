@@ -1,6 +1,8 @@
 # Interview prep
 Notes for different interview questions. Data structure etc notes are in Obsiden
 
+Only describing question that I found challenging / didn't figure out immediately
+
 Using https://github.com/clearloop/leetcode-cli for leetcode interface
 Config file for language is in ~/.leetcode/leetcode.toml
 
@@ -20,7 +22,21 @@ Fairly simple stack question for matching paires of braces. My low-level Swift k
 
 You don't need a base case for the first character.
 
-## Merge two lists
+## 125.valid-palindrome.rb
+Data structyre / technique: Two pointers
+
+Fairly simple question, strip the string of all :punct: then traverse from both ends matching as you go. No need to distinguish odd and even length strings.
+
+If using arrays, split the input in 2, reverse one and compare, you will need to distinguish different length strings. Don't use arrays
+
+## 15.3sum.rb
+Data structure / technique: Two pointers
+
+Simple way is to just use 3 nested loops. Terrible performance, N^3? Trick for uniqness is to sort the elements that sum to target before you add them and then check if they are already present.
+
+Proper way is to modify two sum, for each pair search the list for their compliment. Or something, I don't really care.
+
+## 21.merge-two-sorted-lists.rb
 Data structure / technique: Two pointers (Linked list traversal)
 
 Requires two pointers, for the left and right. Don't check current.next or anything, just look at the current pointers.
@@ -30,3 +46,18 @@ Keep a reference to the result and to the current head of the list. You traverse
 Easy way to initalize a result is to make an empty node and just return `result.next`.
 
 Make sure to handle one list ending before the other, by appending the remainder of the list to the result.
+
+## 26.remove duplicates
+Data structure / technique: Two pointers
+
+This one gave me a LOT of difficulty. Maybe it's something to do with the nagative case but I can't wrap my feable brain around this.
+
+Keep a pointer to the last non duplicate, starting at 0. Iterate the array from 1, as the first element cannot be a duplicate. If the current number is not equal to the last non duplicate, replace the number AFTER the last known duplicate with it, then advance the position of the last known duplicate.
+Remember to compensate for array size vs index when returning last non duplicate
+
+## 345.reverse-vowels-of-a-string.rb
+Data structure / technique: Two pointer
+
+Iterate from either end until you find a vowel on each side, swap them, repeat. This gives O(n).
+
+A worse solution is build a stack of vowels and then iterate the string again, swaping vowels off the stack as you go. This gives O(2n).
