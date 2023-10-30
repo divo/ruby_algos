@@ -20,3 +20,13 @@ Fairly simple stack question for matching paires of braces. My low-level Swift k
 
 You don't need a base case for the first character.
 
+## Merge two lists
+Data structure / technique: Two pointers (Linked list traversal)
+
+Requires two pointers, for the left and right. Don't check current.next or anything, just look at the current pointers.
+
+Keep a reference to the result and to the current head of the list. You traverse the current head and return the result.
+
+Easy way to initalize a result is to make an empty node and just return `result.next`.
+
+Make sure to handle one list ending before the other, by appending the remainder of the list to the result.
