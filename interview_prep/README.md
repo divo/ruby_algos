@@ -61,3 +61,10 @@ Data structure / technique: Two pointer
 Iterate from either end until you find a vowel on each side, swap them, repeat. This gives O(n).
 
 A worse solution is build a stack of vowels and then iterate the string again, swaping vowels off the stack as you go. This gives O(2n).
+
+## 121.best-time-to-buy-and-sell-stock.rb
+Data structure / technique: Sliding Window
+
+This was pretty tricky. It requires a bit of thought and there is no simple technique that just works with it. Brute force solution is easy, but gives O(n!) complexity.
+
+We can leverage the fact the max we are looking for must occuer AFTER the min: Store a result (our max profit) and min seen value. At each step check if the value is lower than the current min and update accordingly, and if the current value gives us more profit, using the current min, then our current profit. It's somewhat like a sliding window, but we don't need a subarray to track the min, just a single value.
