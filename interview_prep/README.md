@@ -68,3 +68,10 @@ Data structure / technique: Sliding Window
 This was pretty tricky. It requires a bit of thought and there is no simple technique that just works with it. Brute force solution is easy, but gives O(n!) complexity.
 
 We can leverage the fact the max we are looking for must occuer AFTER the min: Store a result (our max profit) and min seen value. At each step check if the value is lower than the current min and update accordingly, and if the current value gives us more profit, using the current min, then our current profit. It's somewhat like a sliding window, but we don't need a subarray to track the min, just a single value.
+
+## Sliding window
+904 and 340
+First attempt was to slide the window out at the end until boundry condition, the n increment the start by one and start sliding the window out again. This isn't a sliding window, it's a N! brute force match.
+
+The key is to expand the window linearly along until the boundry condition is met, the slide the _start_ of the window forward until under the boundry condition again.
+We don't need a seperate check for this. Just enumerate the set normally and on every iteration shrink the window from the front until boundry condition satisfied. If the boundry condition is met during that iteration then the start of the window won't need to move. The conditional is in this loop.

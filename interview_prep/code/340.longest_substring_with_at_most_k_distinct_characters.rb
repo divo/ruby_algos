@@ -4,6 +4,7 @@
 def find_length(string, k)
   max, w_start, w_end = 0, 0, 0
   while w_start < string.length
+    # uniq is a bit of a cheat, instead we can keep track of uniq chars in a hash
     if string[w_start..w_end].chars.uniq.length <= k
       window_len = w_end - w_start + 1
       max = window_len if window_len > max
