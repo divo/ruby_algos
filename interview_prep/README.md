@@ -75,3 +75,11 @@ First attempt was to slide the window out at the end until boundry condition, th
 
 The key is to expand the window linearly along until the boundry condition is met, the slide the _start_ of the window forward until under the boundry condition again.
 We don't need a seperate check for this. Just enumerate the set normally and on every iteration shrink the window from the front until boundry condition satisfied. If the boundry condition is met during that iteration then the start of the window won't need to move. The conditional is in this loop.
+
+## Binary Tree
+
+### 226 Invert
+I made a mess of this. Recursive algorithms are not hard!:
+    1. Handle the base case, which is generally the empty / nil case. e.x. Return if nil
+    2. Continue to recurse / navigate to the base case, e.x. Calls for left and right node of current
+    3. Do the work after the recursion is done. Swap the elements / take the smallest / whatever. e.x. Swap left and right node
