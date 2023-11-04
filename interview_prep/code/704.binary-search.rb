@@ -11,7 +11,8 @@
 def search(nums, target)
   left, right = 0, nums.length - 1 
 
-  while left <= right # Stop when left OVERTAKES right
+  while right > left # Stop when left OVERTAKES right
+#  while left <= right # Stop when left OVERTAKES right
     pivot = (right + left) / 2
     ele = nums[pivot]
     if ele == target
@@ -25,3 +26,24 @@ def search(nums, target)
 
   return -1
 end
+
+def binary_search_recursive(nums, target, low = nil, high = nil)
+  low ||= 0
+  high ||= nums.length - 1
+
+  return -1 if low > high
+
+  mid = (low + high) / 2
+
+  if nums[mid] == target
+    mid
+  elsif mid > target
+    binary_search_recursive(nums, target, low, mid - 1)
+  else
+    binary_search_recursive(nums, target, mid + 1, high)
+  end
+end
+
+puts binary_search_recursive([-1,0,3,5,9,12], 2)
+puts binary_search_recursive([-1,0,2,5,9,12], 2)
+puts search([-1,0,2,5,9,12], 2)
