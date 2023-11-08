@@ -54,25 +54,31 @@ class BinarySearchTree
     result += right.nil? ? "" : right.traverse_tree
   end
 
+  # BFS
   def print_tree
     queue = [self]
 
-    level = 0
     while queue.any?
       item = queue.shift
 
-      if item.nil?
-        print "#{level}: _ "
-        next
-      end
+      next if item.nil?
 
-      if item.respond_to?(:value)
-        print "l#{level}: #{item.value} "
-        queue << "\n" << item.left << item.right
-      else
-        print item
-        level += 1
-      end
+      puts "#{item.value} "
+      queue << item.left << item.right
+    end
+  end
+
+  # DFS
+  def print_tree_df
+    stack = [self]
+
+    while stack.any?
+      item = stack.pop
+
+      next if item.nil?
+
+      puts item.value
+      stack << item.right << item.left
     end
   end
 
@@ -105,5 +111,6 @@ root.insert(4)
 root.insert(7)
 root.insert(3)
 puts root.print_tree()
+puts root.print_tree_df()
 puts root.find_min()
 puts root.find_max()
