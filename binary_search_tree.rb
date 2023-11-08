@@ -1,12 +1,7 @@
 class BinarySearchTree
   # These are needed because insert is static
   attr_reader :value
-  attr_accessor :left
-  attr_accessor :right
-
-  @value
-  @left
-  @right
+  attr_accessor :left, :right
 
   def initialize(value)
     @value = value
@@ -18,9 +13,9 @@ class BinarySearchTree
     end
 
     if value < @value
-      return @left.nil? ? nil : @left.search(value)
+      @left&.search(value) || nil
     else
-      return @right.nil? ? nil : @right.search(value)
+      @right&.search(value) || nil
     end
   end
 
@@ -35,42 +30,80 @@ class BinarySearchTree
     end
   end
 
+  # This is not a balanced binary tree, just a Binary Search Tree
   def insert(value)
-    if value < @value
-      if @left.nil?
+    if value < self.value
+      if left.nil?
         @left = BinarySearchTree.new(value)
       else
-        @left.insert(value)
+        left.insert(value)
       end
-    else
-      if @right.nil?
+    elsif value > self.value
+      if right.nil?
         @right = BinarySearchTree.new(value)
       else
-        @right.insert(value)
+        right.insert(value)
       end
     end
   end
 
   # In-Order traversal
   def traverse_tree
-    result = @left.nil? ? "" : @left.traverse_tree
-    result += "#{@value}"
-    result += @right.nil? ? "" : @right.traverse_tree
+    result = left.nil? ? "" : left.traverse_tree
+    result += "#{value}\n"
+    result += right.nil? ? "" : right.traverse_tree
   end
 
-  def to_s
-    traverse_tree
+  def print_tree
+    queue = [self]
+
+    level = 0
+    while queue.any?
+      item = queue.shift
+
+      if item.nil?
+        print "#{level}: _ "
+        next
+      end
+
+      if item.respond_to?(:value)
+        print "l#{level}: #{item.value} "
+        queue << "\n" << item.left << item.right
+      else
+        print item
+        level += 1
+      end
+    end
   end
 
   def find_min
-    unless @left.nil
-      return @left.find_min
-    end
-    return @value
+    return left.find_min unless left.nil?
+
+    return value
+  end
+
+  def find_max
+    return right.find_max unless right.nil?
+
+    return value
   end
 end
 
+# Produces the following tree.
+# This is a binary search tree, not a balanced tree
+#         5
+#       /   \
+#       2    6
+#        \    \
+#         4   7
+#         /
+#        3
 root = BinarySearchTree.new(5)
-puts root.traverse_tree
-BinarySearchTree.insert(4, root, root)
-puts root
+root.insert(2)
+root.insert(6)
+root.insert(4)
+root.insert(7)
+root.insert(3)
+puts root.print_tree()
+puts root.find_min()
+puts root.find_max()
