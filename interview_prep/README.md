@@ -29,14 +29,6 @@ Fairly simple question, strip the string of all :punct: then traverse from both 
 
 If using arrays, split the input in 2, reverse one and compare, you will need to distinguish different length strings. Don't use arrays
 
-## 15.3sum.rb
-Data structure / technique: Two pointers
-
-Simple way is to just use 3 nested loops. Terrible performance, N^3? Trick for uniqness is to sort the elements that sum to target before you add them and then check if they are already present.
-
-The n log n solution is a variation on 2 sum with two pointers, array must be sorted first. Iterate over the array and find any pairs that sum to the compliment of the current element. Searching for pairs uses a normal 2 pointer style approach, move left then sum is less than target and move right when sum is greater than target.
-The trick to no duplicates is skipping any element that repeats. Before each iteration check if the current element is the same as the previous and if they are, skip the current element. This happens in the main loop before we look for pairs (where we must take care to not apply this check for the first element), and also whenever we find a pair; we need to increment the left pointer until we find a new element
-
 ## 21.merge-two-sorted-lists.rb
 Data structure / technique: Two pointers (Linked list traversal)
 
@@ -76,6 +68,20 @@ First attempt was to slide the window out at the end until boundry condition, th
 
 The key is to expand the window linearly along until the boundry condition is met, the slide the _start_ of the window forward until under the boundry condition again.
 We don't need a seperate check for this. Just enumerate the set normally and on every iteration shrink the window from the front until boundry condition satisfied. If the boundry condition is met during that iteration then the start of the window won't need to move. The conditional is in this loop.
+
+## Two pointers
+### 15.3sum.rb
+Data structure / technique: Two pointers
+
+Simple way is to just use 3 nested loops. Terrible performance, N^3? Trick for uniqness is to sort the elements that sum to target before you add them and then check if they are already present.
+
+The n log n solution is a variation on 2 sum with two pointers, array must be sorted first. Iterate over the array and find any pairs that sum to the compliment of the current element. Searching for pairs uses a normal 2 pointer style approach, move left then sum is less than target and move right when sum is greater than target.
+The trick to no duplicates is skipping any element that repeats. Before each iteration check if the current element is the same as the previous and if they are, skip the current element. This happens in the main loop before we look for pairs (where we must take care to not apply this check for the first element), and also whenever we find a pair; we need to increment the left pointer until we find a new element
+
+
+### 11.container-with-most-water.rb
+Got this one on the first try. Simple enough two pointer problem, move the left or right depending on which is smaller
+
 
 ## Binary Tree / Search
 
