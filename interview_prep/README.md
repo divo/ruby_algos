@@ -34,7 +34,8 @@ Data structure / technique: Two pointers
 
 Simple way is to just use 3 nested loops. Terrible performance, N^3? Trick for uniqness is to sort the elements that sum to target before you add them and then check if they are already present.
 
-Proper way is to modify two sum, for each pair search the list for their compliment. Or something, I don't really care.
+The n log n solution is a variation on 2 sum with two pointers, array must be sorted first. Iterate over the array and find any pairs that sum to the compliment of the current element. Searching for pairs uses a normal 2 pointer style approach, move left then sum is less than target and move right when sum is greater than target.
+The trick to no duplicates is skipping any element that repeats. Before each iteration check if the current element is the same as the previous and if they are, skip the current element. This happens in the main loop before we look for pairs (where we must take care to not apply this check for the first element), and also whenever we find a pair; we need to increment the left pointer until we find a new element
 
 ## 21.merge-two-sorted-lists.rb
 Data structure / technique: Two pointers (Linked list traversal)
