@@ -12,35 +12,28 @@ end
 # Input: list1 = [1,2,4], list2 = [1,3,4]
 # Output: [1,1,2,3,4,4]
 # Result: [nil, 1, 1, 2, 3, 4]
-def merge_two_lists(list1, list2)
-  return list2 unless list1
-  return list1 unless list2
+def merge_two_lists(left, right)
+  return left unless right
+  return right unless left
 
   result = ListNode.new
-  current = result
-  while !list1.nil? && !list2.nil?
-    if list1.val < list2.val
-      current.next = ListNode.new(list1.val)
-      list1 = list1.next
+  head = result
+  while !left.nil? && !right.nil?
+    if left.val < right.val
+      head.next = left
+      left = left.next
     else
-      current.next = ListNode.new(list2.val)
-      list2 = list2.next
+      head.next = right
+      right = right.next
     end
-    current = current.next
+    head = head.next
   end
 
-  if list1.nil?
-    current.next = list2
-  elsif list2.nil?
-    current.next = list1
+  if left.nil?
+    head.next = right
+  elsif right.nil?
+    head.next = left
   end
 
   result.next
 end
-
-l = ListNode.new(1)
-r = ListNode.new(1)
-[2, 4].reduce(l) { |list, x| list.next = ListNode.new(x); list.next }
-[3, 4].reduce(r) { |list, x| list.next = ListNode.new(x); list.next }
-
-# puts merge_two_lists(l, r)
