@@ -11,30 +11,58 @@
 #
 def search(nums, target)
   left, right = 0, nums.length - 1    
+  result = -1
+
   while left <= right
     mid = (left + right) / 2
-    if nums[left] == target
-      return left
+    if nums[mid] == target
+      result = mid
+      break
     end
 
-    if nums[left] < nums[mid] # In the sorted section
-      if nums[left] < target # Need to search to the left
+    if nums[left] <= nums[mid]
+      if nums[mid] > target && nums[left] <= target
         right = mid - 1
       else
         left = mid + 1
       end
-    else # nums[left] > nums[mid]
-      if nums[mid] < target
+    else
+      if nums[mid] < target && nums[right] >= target
         left = mid + 1
-      else 
+      else
         right = mid - 1
       end
     end
   end
 
-  return -1
+  result
 end
 
-# puts search([4,5,6,7,0,1,2], 0)
-puts search([3, 1], 0)
+def search_solution(nums, target)
+  left = 0
+  right = nums.size - 1
+  result = -1
 
+  while left <= right
+    mid = (left + right) / 2
+    if nums[mid] == target
+      result = mid
+      break
+    end
+
+    if nums[left] > nums[mid]
+      if nums[mid] < target && target <= nums[right]
+        left = mid + 1
+      else
+        right = mid - 1
+      end
+    else
+      if nums[mid] > target && nums[left] <= target
+        right = mid - 1
+      else
+        left = mid + 1
+      end
+    end
+  end
+  result
+end
