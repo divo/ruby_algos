@@ -11,13 +11,11 @@
 #
 def search(nums, target)
   left, right = 0, nums.length - 1    
-  result = -1
 
   while left <= right
     mid = (left + right) / 2
     if nums[mid] == target
-      result = mid
-      break
+      return mid
     end
 
     if nums[left] <= nums[mid]
@@ -35,7 +33,7 @@ def search(nums, target)
     end
   end
 
-  result
+  -1
 end
 
 def search_solution(nums, target)
