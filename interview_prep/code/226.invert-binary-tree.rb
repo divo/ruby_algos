@@ -13,22 +13,10 @@
 def invert_tree(root)
   return unless root
 
+  root.left, root.right = root.right, root.left
   invert_tree(root.left)
   invert_tree(root.right)
 
-  root.left, root.right = root.right, root.left
   root
 end
 
-def invert_tree_crap(root)
-  left, right = root&.left, root&.right
-  if left && right
-    root.left = right
-    root.right = left
-  end
-
-  invert_tree(left) if left
-  invert_tree(right) if right
-
-  root
-end
