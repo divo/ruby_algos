@@ -12,13 +12,14 @@
 # @return {Boolean}
 def is_same_tree(p, q)
   stack = [[p, q]]
-  until stack.empty? do
+  until stack.empty?
     l, r = stack.pop
     return false if l&.val != r&.val
 
-    stack.push [l.left, r.left] if l
-    stack.push [l.right, r.right] if r
+    stack.push [l.left, r.left] if l # Either both nodes are nil or neither, so only check one
+    stack.push [l.right, r.right] if l
   end
+  true
 end
 
 def is_same_tree_recursive(p, q)
