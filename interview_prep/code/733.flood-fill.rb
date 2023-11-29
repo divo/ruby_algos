@@ -6,49 +6,44 @@
 # Input: image = [[1,2,1],[2,2,0],[1,0,1]], sr = 1, sc = 1, color = 2
 # sel: 1
 
-# Iterative, BFS
 def flood_fill(image, sr, sc, color)
-  target = image[sr][sc]
-  return image if target == color
+  sel_color = image[sr][sc]
+  return image if sel_color == color
 
   queue = [[sr, sc]]
-  while !queue.empty?
-    head = queue.shift
-    row = head.first
-    col = head.last
-    if image[row][col] == target
-      image[row][col] = color
-
-      queue << [row - 1, col] if row - 1 >= 0
-      queue << [row, col + 1] if col + 1 < image[row].length
-      queue << [row + 1, col] if row + 1 < image.length
-      queue << [row, col - 1] if col - 1 >= 0
+  until queue.empty?
+    x, y = queue.pop
+    if image[x][y] == sel_color
+      image[x][y] = color
+      queue << [x - 1, y] if x - 1 >= 0
+      queue << [x + 1, y] if x + 1 < image.length
+      queue << [x, y - 1] if y - 1 >= 0
+      queue << [x, y + 1] if y + 1 < image[x].length
     end
   end
 
   image
 end
 
-def flood_fill_recursive(image, sr, sc, color, sel_color = nil)
-  if sel_color.nil?
-    sel_color = image[sr][sc]
-    return image if color == sel_color
+def flood_fill_rec(image, sr, sc, color)
+  return image if image[sr][sc] == color
 
-    flood_fill(image, sr, sc, color, sel_color)
-  else
-    return if image[sr].nil?
-    return if image[sr][sc].nil?
-    return if image[sr][sc] != sel_color
-    return unless (0...image.length).include? sr
-    return unless (0...image[sr].length).include? sc
-
-    image[sr][sc] = color
-    flood_fill(image, sr + 1, sc, color, sel_color)
-    flood_fill(image, sr - 1, sc, color, sel_color)
-    flood_fill(image, sr, sc + 1, color, sel_color)
-    flood_fill(image, sr, sc - 1, color, sel_color)
-  end
-
+  sel_color = image[sr][sc]
+  flood_fill_recursive(image, sr, sc, color, sel_color)
   image
 end
 
+def flood_fill_recursive(image, sr, sc, color, sel_color = nil)
+  # Check if we are in image bounds
+  return image if sr < 0 || sc < 0
+  return image if sr >= image.length || sc >= image[sr].length
+
+  if image[sr][sc] == sel_color
+    image[sr][sc] = color
+    flood_fill_recursive(image, sr - 1, sc, color, sel_color)
+    flood_fill_recursive(image, sr + 1, sc, color, sel_color)
+    flood_fill_recursive(image, sr, sc + 1, color, sel_color)
+    flood_fill_recursive(image, sr, sc - 1, color, sel_color)
+  end
+  image
+end
