@@ -11,8 +11,7 @@
 def search(nums, target)
   left, right = 0, nums.length - 1
 
-  #while right > left # Stop when left OVERTAKES right
-  while left <= right # Stop when left OVERTAKES right
+  while left <= right # Stop when left OVERTAKES right, = is important for arrays of length 1
     pivot = (right + left) / 2
     ele = nums[pivot]
     if ele == target
