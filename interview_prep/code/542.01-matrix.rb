@@ -1,6 +1,37 @@
 # @param {Integer[][]} mat
 # @return {Integer[][]}
-#
+def update_matrix(mat)
+  result = Array.new(mat.length) { Array.new(mat.first.length) { 10000 } }
+  mat.each_with_index do |row, r|
+    row.each_with_index do |value, c|
+      if value.zero?
+        visited = Array.new(mat.length) { Array.new(mat.first.length) { false } }
+        calc_distances(mat, r, c, result, visited)
+      end
+    end
+  end
+  result
+end
+
+def calc_distances(mat, row, col, result, visited)
+  queue = [[row, col, 0]]
+
+  until queue.empty?
+    row, col, dist = queue.shift
+
+    next if visited[row][col]
+
+    visited[row][col] = true
+    dist = 0 if (mat[row][col]).zero?
+    result[row][col] = [dist, result[row][col]].min
+
+    queue << [row + 1, col, dist + 1] if row + 1 < mat.length
+    queue << [row - 1, col, dist + 1] if row - 1 >= 0
+    queue << [row, col + 1, dist + 1] if col + 1 < mat[row].length
+    queue << [row, col - 1, dist + 1] if col - 1 >= 0
+  end
+end
+
 # Spent like 1 hours writing out the brute force solution to this. It's N^3 but I thought I would 
 # get away with it given the size of the input set. Guess not.
 # It was very fiddly to write and I made a lot of shitty little errors. To my credit
@@ -11,7 +42,7 @@
 #
 # Solution:
 # USe BFS out from the 0 Cells. Not really sure I get it, but it's N^2
-def update_matrix(mat)
+def update_matrix_bad(mat)
   # For each call, pass it to a nearest methods
   # Nearest takes an index [x, y] for the cell of concern, and a result array
   # nearest uses a queue to check all the neighbours
