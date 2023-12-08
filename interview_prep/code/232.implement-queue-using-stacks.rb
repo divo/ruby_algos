@@ -9,14 +9,14 @@ class MyQueue
   end
 
   def pop
-    @buffer << @queue.pop until @queue.empty? 
+    @buffer << @queue.pop until @queue.empty?
     result = @buffer.pop
     @queue << @buffer.pop until @buffer.empty?
     result
   end
 
   def peek()
-    @buffer << @queue.pop until @queue.empty? 
+    @buffer << @queue.pop until @queue.empty?
     result = @buffer.last # last == peek
     @queue << @buffer.pop until @buffer.empty?
     result

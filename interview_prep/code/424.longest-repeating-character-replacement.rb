@@ -13,7 +13,7 @@ def character_replacement(s, k)
   chars.each_with_index do |c, right|
     w_len = right - left + 1
     counts[c] += 1
-    if w_len - counts.max_by { _2 }.last <= k
+    if w_len - counts.max_by { 2 }.last <= k
       max = [w_len, max].max
     else
       counts[chars[left]] -= 1
