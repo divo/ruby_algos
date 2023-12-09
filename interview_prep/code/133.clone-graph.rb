@@ -11,21 +11,20 @@
 # @param {Node} node
 # @return {Node}
 def cloneGraph(node)
-  queue = [[node, nil]]
-  result = nil
-  visited = {}
-  until queue.empty?
-    current, parent = queue.shift
-    next if visited[current] || current.nil?
-
-    n_node = Node.new(current.val)
-    result ||= n_node
-
-    parent.neighbors << n_node if parent
-    n_node.neighbors << parent if parent
-
-    current.neighbors.each { |n| queue << [n, n_node] }
-    visited[current] = true
-  end
-  result
+  df_clone(node, {})
 end
+
+def df_clone(node, clones)
+  return unless node
+  return clones[node] if clones.key?(node)
+
+  new_node = Node.new(node.val)
+  clones[node] = new_node
+
+  node.neighbors.each do |n|
+    new_node.neighbors << df_clone(n, clones)
+  end
+
+  new_node
+end
+
