@@ -4,24 +4,37 @@
 def can_finish(num_courses, prerequisites)
   return true if prerequisites.empty?
 
-  prereq_map = prerequisites.each_with_object({}) do |prereq, acc|
-    acc[prereq.last] = prereq.first
+  prereq_map = prerequisites.each_with_object(Hash.new { [] }) do |prereq, acc|
+    acc[prereq.first] += [prereq.last]
   end
-  courses = prerequisites.flatten.uniq
 
-  courses.map do |course|
+  courses_left = num_courses
+  num_courses.times do |course|
     prereq = prereq_map[course]
     loop do
-      if prereq.nil?
-        num_courses -= 1
+      if prereq.last.nil?
+        courses_left -= 1
         break
-      elsif prereq == course
+      elsif prereq.include?(course)
         break
       else
-        prereq = prereq_map[prereq]
+        # Left off here, need to check the new prereq is not already in prereqs
+        num = prereq_map[prereq.last]
+        if !(prereq & num).empty?
+          break
+        elsif num.is_a?(Integer) # Awful
+          prereq << num
+        else
+          prereq << nil
+        end
       end
     end
   end
 
-  num_courses <= 0
+  courses_left <= 0
 end
+
+require 'byebug'; byebug;
+# puts can_finish(3, [[0,2],[1,2],[2,0]])
+# puts can_finish(3, [[1,0],[1,2],[0,1]])
+puts can_finish(2, [[1,0],[0,1]])
