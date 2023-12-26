@@ -11,10 +11,7 @@
 # @param {Integer[]} inorder
 # @return {TreeNode}
 def build_tree(preorder, inorder)
-  result = TreeNode.new
-
-  current = result
-  next_node = current
+  result = current = next_node = TreeNode.new
 
   preorder.each_with_index do |val, index|
     next_node.val = val

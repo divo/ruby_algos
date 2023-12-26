@@ -10,19 +10,18 @@
 # @param {TreeNode} root
 # @return {Boolean}
 def is_balanced(root)
-  return true unless root
-    
-  queue = [[root, 1]]
-  max = nil
-  until queue.empty?
-    node, depth = queue.shift
-    max ||= depth unless node&.left && node&.right
+  # Balanced binary tree is one where the depth of the two subtrees of every 
+  # node differs by no more than 1
+  balanced_height(root, 0) >= 0
+end
 
-    return false if max && depth > max + 1 # Allowed a difference of 1
+def balanced_height(node, depth)
+  return depth unless node
 
-    queue << [node.left, depth + 1] if node.left
-    queue << [node.right, depth + 1] if node.right
-  end
+  l = balanced_height(node.left, depth + 1)
+  r = balanced_height(node.right, depth + 1)
 
-  true
+  return -1 if (l - r).abs > 1
+
+  [l, r].max
 end
