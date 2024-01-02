@@ -11,5 +11,3 @@ def find_content_children(g, s)
     res
   end
 end
-
-
