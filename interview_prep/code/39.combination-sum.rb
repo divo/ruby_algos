@@ -2,6 +2,29 @@
 # @param {Integer} target
 # @return {Integer[][]}
 def combination_sum(candidates, target)
+  result = []
+  dfs([], 0, result, candidates, target)
+  result
+end
+
+def dfs(current, k, result, candidates, target)
+  return if k >= candidates.size
+
+  return if current.sum > target
+
+  if current.sum == target
+    result << current.dup
+    return
+  end
+
+  current << candidates[k]
+  dfs(current, k, result, candidates, target)
+  current.pop
+  dfs(current, k + 1, result, candidates, target)
+end
+
+
+def combination_sum_nested(candidates, target)
   @result = [] # ANKI: Nested functions can only access instance variables
   @target = target
   @candidates = candidates
