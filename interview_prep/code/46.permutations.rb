@@ -7,18 +7,16 @@ def permute(nums)
 end
 
 def build(current, nums, result)
-  buffer = current.dup
   if nums.empty?
     result << current.dup
     return
   end
 
   nums.each do |head|
-    buffer << head
-    tail = nums.dup
-    tail.delete(head)
-    build(buffer, tail, result)
-    buffer.pop
+    current << head
+    tail = nums.dup - [head]
+    build(current, tail, result)
+    current.pop
   end
 end
 
