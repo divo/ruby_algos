@@ -14,8 +14,7 @@ def build(current, nums, result)
 
   nums.each do |head|
     current << head
-    tail = nums.dup - [head]
-    build(current, tail, result)
+    build(current, nums - [head], result)
     current.pop
   end
 end
