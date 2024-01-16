@@ -10,18 +10,22 @@
 # @param {TreeNode} root
 # @return {Boolean}
 def is_balanced(root)
-  # Balanced binary tree is one where the depth of the two subtrees of every 
-  # node differs by no more than 1
-  balanced_height(root, 0) >= 0
+  # The height of two subtrees never differ by more than one.
+  # Use DFS to walk down the tree, at each step increment the current height
+  # If the height of left and right branches differ by > 1 then return -1,
+  # otherwise return the height
+  return true unless root
+
+  height(root) >= 0
 end
 
-def balanced_height(node, depth)
-  return depth unless node
+def height(root, depth = 0)
+  return depth unless root
 
-  l = balanced_height(node.left, depth + 1)
-  r = balanced_height(node.right, depth + 1)
+  left_h = height(root.left, depth + 1)
+  right_h = height(root.right, depth + 1)
 
-  return -1 if (l - r).abs > 1
+  return -1 if (left_h - right_h).abs > 1
 
-  [l, r].max
+  [left_h, right_h].max
 end
