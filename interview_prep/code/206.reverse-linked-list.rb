@@ -9,24 +9,21 @@
 # @param {ListNode} head
 # @return {ListNode}
 # 3 -> 4 -> 5
+# [1, 2, 3, 4, 5]
+# []
+# head 3
+# ref 3
+# next 1
+# tail 2
 def reverse_list(head)
-  do_reverse(head, nil)
-end
-
-def do_reverse(head, prev)
-  return prev unless head
-  n_node = head.next
-  head.next = prev
-  do_reverse(n_node, head)
-end
-
-def reverse_list_iterative(head)
-  prev = nil
+  tail = nil
+  h_next = nil
   while head
-    n_node = head.next
-    head.next = prev
-    prev = head
-    head = n_node
+    h_next = head.next
+    head.next = tail
+    tail = head
+    head = h_next
   end
-  prev
+   
+  tail
 end
