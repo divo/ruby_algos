@@ -8,10 +8,12 @@ def search_matrix(matrix, target)
 end
 
 # Return the row the target could be in, given an ordered matrix
+# This is a mess
 def find_row(matrix, target)
-  rows = matrix.collect { |r| r.first }
+  rows = matrix.collect(&:first)
   left, right = 0, rows.length - 1
   pivot = (right + left) / 2
+
   while left < right
     if rows[pivot] > target
       right = pivot - 1
@@ -44,4 +46,3 @@ def b_search(nums, target)
 
   -1
 end
-
