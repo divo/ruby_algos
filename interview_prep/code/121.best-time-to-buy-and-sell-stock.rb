@@ -14,7 +14,10 @@
 #
 #  result
 #end
+# Iterate the array once and keep track of the smallest price. Subtract that minimum from each price
+# The key insight here is for any new min price, we can only consider prices ahead of it!
 
+# [7,1,5,3,6,4]
 def max_profit(prices)
   result = 0
   min = prices.first
