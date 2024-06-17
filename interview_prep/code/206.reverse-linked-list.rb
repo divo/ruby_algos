@@ -11,19 +11,14 @@
 # 3 -> 4 -> 5
 # [1, 2, 3, 4, 5]
 # []
-# head 3
-# ref 3
-# next 1
-# tail 2
+# Navigate down the list setting next to the previous element
 def reverse_list(head)
-  tail = nil
-  h_next = nil
-  while head
-    h_next = head.next
-    head.next = tail
-    tail = head
-    head = h_next
+  prev = nil
+  while head != nil
+    nxt = head.next
+    head.next = prev
+    prev = head
+    head = nxt
   end
-   
-  tail
+  prev
 end
