@@ -9,27 +9,27 @@
 # @param {ListNode} head
 # @param {Integer} n
 # @return {ListNode}
-# Walk list bulding array of nodes indexed by position
-# Then use the array to update list
-# This is the only way I can think to do it in one pass
-# From the END of the list
-def remove_nth_from_end(head, n)
-  items = []
-  current = head
-  idx = 0
+class ListNode
+  include Enumerable
 
-  until current.nil?
-    items[idx] = current
-    idx += 1
-    current = current.next
+  def each(&block)
+    block.call(self)
+    @next&.each(&block)
   end
+end
+
+def remove_nth_from_end(head, n)
+  items = list_to_array(head)
 
   return nil if items.length == 1
   return head if n > items.length
+  return head.next if n == items.length
 
   item_index = items.length - n
-  return head.next if item_index == 0
-
   items[item_index - 1].next = items[item_index].next
   head
+end
+
+def list_to_array(head)
+  head.reduce([]) { |arr, node| arr << node }
 end
