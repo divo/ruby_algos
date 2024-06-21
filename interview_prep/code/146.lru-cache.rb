@@ -1,15 +1,27 @@
 # frozen_string_literal: true
 
+class ListNode
+  attr_accessor :key, :value, :next, :prev
+
+  def initialize(key: nil, val: 0, nxt: nil, prev: nil)
+    @key = key
+    @value = val
+    @next = nxt
+    @prev = prev
+  end
+end
+
 # LRUCache
 class LRUCache
   # =begin
   #     :type capacity: Integer
   # =end
+
   def initialize(capacity)
-    @store = {}
-    @timestamps = {}
+    @index = {}
+    @head = nil
+    @tail = nil
     @capacity = capacity
-    @tick = 0
   end
 
   # =begin
@@ -17,14 +29,12 @@ class LRUCache
   #     :rtype: Integer
   # =end
   def get(key)
-    value = @store[key]
-    if value
-      @timestamps[key] = @tick
-      @tick += 1
-      return value
-    else
-      -1
-    end
+    # If node exists, move it to the head and return the value
+    node = @index[key]
+    return -1 unless node
+
+    move_to_head(node)
+    return node.value
   end
 
   # =begin
@@ -33,34 +43,55 @@ class LRUCache
   #     :rtype: Void
   # =end
   def put(key, value)
-    if @store[key]
-      @store[key] = value
-      @timestamps[key] = @tick
-      @tick += 1
-      return
+    # If key already present, update it and move node to head of list
+    node = @index[key]
+    if node
+      node.value = value
+      move_to_head(node)
+    else
+      # If we are over capacity, first evict the tail
+      evict if @index.size == @capacity
+      node = ListNode.new(key: key, val: value)
+      move_to_head(node)
+      @index[key] = node
     end
-
-    if @store.length >= @capacity
-      # Evict the least recently used item.
-      evict
-    end
-
-    @store[key] = value
-    @timestamps[key] = @tick
-    @tick += 1
   end
 
-  private
-
   def evict
-    # Find the least recently used item.
-    lru_key = @timestamps.sort_by { |k, v| v }.first.first
-    @store.delete(lru_key)
-    @timestamps.delete(lru_key)
+    @index.delete(@tail.key)
+    @tail.prev.next = nil
+    prev = @tail.prev
+    @tail.prev = nil
+    @tail = prev
+  end
+
+  # 1 <-> 2 <-> 3
+  def move_to_head(node)
+    # Handle first node added
+    unless @head
+      @head = node
+      @tail = node
+      return
+    end
+    
+    return if @head == node
+
+    @tail = @tail.prev if node == @tail
+    node.prev&.next = node.next
+    node.next&.prev = node.prev
+
+    node.next = @head
+    node.prev = nil
+    @head.prev = node
+    @head = node
   end
 end
 
 # Your LRUCache object will be instantiated and called as such:
-# obj = LRUCache.new(capacity)
-# param_1 = obj.get(key)
-# obj.put(key, value)
+obj = LRUCache.new(2)
+obj.put(2, 1)
+obj.put(1, 1)
+obj.put(2, 3)
+obj.put(4, 1)
+puts obj.get(1) # -1
+puts obj.get(2) # 3
