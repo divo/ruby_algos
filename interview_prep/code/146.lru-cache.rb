@@ -34,7 +34,7 @@ class LRUCache
     return -1 unless node
 
     move_to_head(node)
-    return node.value
+    node.value
   end
 
   # =begin
@@ -43,29 +43,27 @@ class LRUCache
   #     :rtype: Void
   # =end
   def put(key, value)
-    # If key already present, update it and move node to head of list
-    node = @index[key]
-    if node
-      node.value = value
-      move_to_head(node)
-    else
-      # If we are over capacity, first evict the tail
-      evict if @index.size == @capacity
-      node = ListNode.new(key: key, val: value)
-      move_to_head(node)
-      @index[key] = node
-    end
+    # evict the tail if we need to insert a new node
+    evict if @index.size == @capacity && !@index[key]
+
+    node = @index[key] || ListNode.new(key: key, val: value)
+    node.value = value
+    move_to_head(node)
+    @index[key] = node
   end
+
+  private
 
   def evict
     @index.delete(@tail.key)
+
     if @head == @tail
       @head = nil
       @tail = nil
       return
     end
 
-    @tail.prev&.next = nil # Safe access to handle capacity == 1
+    @tail.prev.next = nil
     prev = @tail.prev
     @tail.prev = nil
     @tail = prev
@@ -73,35 +71,23 @@ class LRUCache
 
   # 1 <-> 2 <-> 3
   def move_to_head(node)
-    # Handle first node added
-    unless @head
-      @head = node
-      @tail = node
-      return
-    end
-    
     return if @head == node
 
-    @tail = @tail.prev if node == @tail
+    # Handle first node added to cache
+    unless @head
+      @tail = @head = node
+      return
+    end
+
+    @tail = @tail.prev if node == @tail # Update tail reference if moving tail
+
+    # Move the node out of its position in the list
     node.prev&.next = node.next
     node.next&.prev = node.prev
 
+    # Update the head reference
     node.next = @head
-    node.prev = nil
     @head.prev = node
     @head = node
   end
 end
-
-# Your LRUCache object will be instantiated and called as such:
-obj = LRUCache.new(1)
-puts obj.get(6) # -1
-puts obj.get(8) # -1
-obj.put(12, 1)
-puts obj.get(2) # -1
-obj.put(15, 11)
-obj.put(5, 2)
-obj.put(1, 15)
-obj.put(4, 2)
-puts obj.get(5) # -1
-obj.put(15, 15)
