@@ -59,7 +59,13 @@ class LRUCache
 
   def evict
     @index.delete(@tail.key)
-    @tail.prev.next = nil
+    if @head == @tail
+      @head = nil
+      @tail = nil
+      return
+    end
+
+    @tail.prev&.next = nil # Safe access to handle capacity == 1
     prev = @tail.prev
     @tail.prev = nil
     @tail = prev
@@ -88,10 +94,14 @@ class LRUCache
 end
 
 # Your LRUCache object will be instantiated and called as such:
-obj = LRUCache.new(2)
-obj.put(2, 1)
-obj.put(1, 1)
-obj.put(2, 3)
-obj.put(4, 1)
-puts obj.get(1) # -1
-puts obj.get(2) # 3
+obj = LRUCache.new(1)
+puts obj.get(6) # -1
+puts obj.get(8) # -1
+obj.put(12, 1)
+puts obj.get(2) # -1
+obj.put(15, 11)
+obj.put(5, 2)
+obj.put(1, 15)
+obj.put(4, 2)
+puts obj.get(5) # -1
+obj.put(15, 15)
