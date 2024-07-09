@@ -2,23 +2,21 @@
 # @param {Integer} h
 # @return {Integer}
 def min_eating_speed(piles, h)
-  k = 1
-  loop do
-    remaining_h = h
-    piles_copy = piles.dup
-    while remaining_h > 0
-      piles_copy.sort!.reverse!
-      pile = piles_copy.shift
-      hours_taken = pile < k ? 1 : pile / k
-      b_remaining = pile < k ? 0 : pile % k
-      piles_copy << b_remaining
-      remaining_h -= hours_taken
+  feasible = -> speed do
+    sums = piles.map do |pile|
+      (pile / speed) + (pile % speed == 0 ? 0 : 1)
     end
-
-    return k if piles_copy.sum.zero?
-    k += 1
+    sums.sum <= h
   end
 
-
+  left, right = 1, piles.max
+  while left < right
+    mid = (right + left) / 2
+    if feasible.call(mid)
+      right = mid
+    else
+      left = mid + 1
+    end
+  end
+  left
 end
-
