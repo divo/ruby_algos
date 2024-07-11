@@ -3,10 +3,9 @@
 # @return {Integer}
 def min_eating_speed(piles, h)
   feasible = -> speed do
-    sums = piles.map do |pile|
+    piles.map do |pile|
       (pile / speed) + (pile % speed == 0 ? 0 : 1)
-    end
-    sums.sum <= h
+    end.sum <= h
   end
 
   left, right = 1, piles.max
