@@ -4,10 +4,10 @@
 # Iterate over the array, keeping track of the min value and using that to determine profit
 def max_profit(prices)
   result = 0
-  min = prices.first
+  min_price = prices[0]
   prices.each do |price|
-    min = [price, min].min
-    result = [result, price - min].max
+    min_price = [min_price, price].min
+    result = [result, price - min_price].max
   end
 
   result
