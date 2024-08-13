@@ -1,12 +1,25 @@
 # Definition for Node.
-# class Node
-#     attr_accessor :val, :next, :random
-#     def initialize(val = 0)
-#         @val = val
-#		  @next = nil
-#		  @random = nil
-#     end
-# end
+ class Node
+     attr_accessor :val, :next, :random
+     def initialize(val = 0, _next = nil)
+         @val = val
+		     @next = _next
+		     @random = nil
+     end
+ end
+
+class Node
+  include Enumerable
+
+  def each(&block)
+    head = self
+    while head
+      block.call(head)
+      head = head.next
+    end
+    self
+  end
+end
 
 # @param {Node} node
 # @return {Node}
@@ -18,32 +31,21 @@ def copyRandomList(head)
 end
 
 def copy_list(head)
-  result = Node.new(0)
-  current = result
-  random_map = {}
-  old_list_map = {}
+  current = result = Node.new(0)
+  random_map, old_list_map = {}, {}
 
-  while head
-    current.next = Node.new(head.val)
-    old_list_map[head] = current.next
-    if head.random
-      random_map[current.next] = head.random
-    end
-    head = head.next
+  head.each do |node|
+    current.next = Node.new(node.val)
+    old_list_map[node] = current.next
+    random_map[current.next] = node.random # Can store nil if random not set 
     current = current.next
-   end
+  end
 
   [result.next, random_map, old_list_map]
 end
 
 def update_random_references(head, random_map, old_list_map)
-  current = head
-  while current
-    old_random = random_map[current]
-    if old_random
-      current.random = old_list_map[old_random]
-    end
-    current = current.next
+  head.each do |current|
+    current.random = old_list_map[random_map[current]]
   end
-  head
 end
