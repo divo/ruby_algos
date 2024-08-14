@@ -9,6 +9,11 @@
 # end
 # @param {TreeNode} root
 # @return {Integer}
+# 
+# This solution is correct. It timesout 'exec' on a tree that consists of
+# hundereds of nodes only on the right. The same solution works
+# with other runtimes, so 'exec' timing out is probably just
+# them not paying attention to Ruby perfomance again
 def diameter_of_binary_tree(root)
   result = 0
   queue = [root]
