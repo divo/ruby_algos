@@ -9,23 +9,22 @@
 # end
 # @param {TreeNode} root
 # @return {Boolean}
+# Depth of the two subtrees of every node cannot differ by more than one
 def is_balanced(root)
-  # The height of two subtrees never differ by more than one.
-  # Use DFS to walk down the tree, at each step increment the current height
-  # If the height of left and right branches differ by > 1 then return -1,
-  # otherwise return the height
-  return true unless root
+  queue = [root]
+  until queue.empty?
+    node = queue.shift
+    next unless node
 
-  height(root) >= 0
+    return false if (depth(node.right) - depth(node.left)).abs > 1
+
+    queue << node.right << node.left
+  end
+  true
 end
 
-def height(root, depth = 0)
-  return depth unless root
+def depth(node, depth = 0)
+  return depth unless node
 
-  left_h = height(root.left, depth + 1)
-  right_h = height(root.right, depth + 1)
-
-  return -1 if (left_h - right_h).abs > 1
-
-  [left_h, right_h].max
+  [depth(node.left, depth + 1), depth(node.right, depth + 1)].max
 end
