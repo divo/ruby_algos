@@ -11,21 +11,23 @@
 # @param {TreeNode} q
 # @return {Boolean}
 def is_same_tree(p, q)
-  stack = [[p, q]]
-  until stack.empty?
-    l, r = stack.pop
-    return false if l&.val != r&.val
+  queue = [[p, q]]
+  until queue.empty?
+    l, r = queue.shift
+    next if l.nil? && r.nil?
 
-    stack.push [l.left, r.left] if l # Either both nodes are nil or neither, so only check one
-    stack.push [l.right, r.right] if l
+    return false unless l&.val == r&.val
+
+    queue << [l&.left, r&.left] << [l&.right, r&.right]
   end
+
   true
 end
 
 def is_same_tree_recursive(p, q)
   return true if p.nil? && q.nil?
 
-  return false if p&.val != q&.val
+  return false unless p&.val == q&.val
 
-  is_same_tree(p.left, q.left) && is_same_tree(p.right, q.right)
+  is_same_tree_recursive(p.left, q.left) && is_same_tree_recursive(p.right, q.right)
 end
