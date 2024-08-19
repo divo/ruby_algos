@@ -9,25 +9,31 @@
 # end
 # @param {TreeNode} root
 # @return {Integer}
+# 
+# This solution is correct. It timesout 'exec' on a tree that consists of
+# hundereds of nodes only on the right. The same solution works
+# with other runtimes, so 'exec' timing out is probably just
+# them not paying attention to Ruby perfomance again
 def diameter_of_binary_tree(root)
-  # Need to find the depth of every left/right subtree and take the max pair
+  result = 0
   queue = [root]
-  result = []
   until queue.empty?
-    node = queue.pop
-    result << tree_depth(node)
+    node = queue.shift
+
+    result = [result, node_diameter(node)].max
     queue << node.left unless node.left.nil?
     queue << node.right unless node.right.nil?
   end
-  result.max
+
+  result
 end
 
-def tree_depth(root)
-  depth(root.left, 1) + depth(root.right, 1)
+def node_diameter(root)
+  height_of_tree(root.right) + height_of_tree(root.left)
 end
 
-def depth(node, depth)
-  return depth - 1 if node.nil?
+def height_of_tree(root, height = 0)
+  return height unless root
 
-  [depth(node.left, depth + 1), depth(node.right, depth + 1)].max
+  [height_of_tree(root.left, height + 1), height_of_tree(root.right, height + 1)].max
 end
