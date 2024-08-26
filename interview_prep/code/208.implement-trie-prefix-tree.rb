@@ -7,6 +7,8 @@ class Trie
   end
 
   def insert(word)
+    # Decend the tree, creating a node for each character in the input
+    # The final leaf node contains the complete string
     current = self
     word.chars.each do |c|
       current.nodes[c_to_idx(c)] = Trie.new if current.nodes[c_to_idx(c)].nil?
@@ -16,6 +18,8 @@ class Trie
   end
 
   def search(word)
+    # Decend the tree, if we arrive at a node with the input
+    # set as value, then the Trie contains that word
     current = self
     word.chars.each do |c|
       current = current.nodes[c_to_idx(c)]
@@ -25,6 +29,8 @@ class Trie
   end
 
   def starts_with(prefix)
+    # Much the same as search, but we don't need the
+    # Trie to contain the word, just it's characters
     current = self
     prefix.chars.each do |c|
       current = current.nodes[c_to_idx(c)]
@@ -35,6 +41,8 @@ class Trie
 
   private
 
+  # Convert a character to int
+  # For using ASCII chars as array index, i.e. a = 0, z = 25
   def c_to_idx(c)
     c.ord - 97
   end
