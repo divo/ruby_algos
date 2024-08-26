@@ -1,9 +1,7 @@
 class Trie
-  attr_accessor :value
-  attr_accessor :nodes
-  
+  attr_accessor :value, :nodes
 
-  def initialize()
+  def initialize
     @nodes = Array.new(26)
     self.value = nil
   end
@@ -11,7 +9,7 @@ class Trie
   def insert(word)
     current = self
     word.chars.each do |c|
-      current.nodes[c_to_idx(c)] = Trie.new() if current.nodes[c_to_idx(c)].nil?
+      current.nodes[c_to_idx(c)] = Trie.new if current.nodes[c_to_idx(c)].nil?
       current = current.nodes[c_to_idx(c)]
     end
     current.value = word
@@ -35,10 +33,10 @@ class Trie
     true
   end
 
-  private 
+  private
 
   def c_to_idx(c)
-    return c.ord - 97
+    c.ord - 97
   end
 end
 
