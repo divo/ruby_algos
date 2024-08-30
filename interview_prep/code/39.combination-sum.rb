@@ -1,6 +1,29 @@
 # @param {Integer[]} candidates
 # @param {Integer} target
 # @return {Integer[][]}
+def combination_sum_aug30(candidates, target)
+  # For each n in candidates, generate a set for each n in candidates
+  # Add it to result when the set sums to the target
+  result = []
+
+  dfs = lambda do |position, subset|
+    return if subset.sum > target
+
+    if subset.sum == target
+      result << subset
+      return result
+    end
+
+    candidates.each do |n|
+      subset[position] = n
+      dfs.call(position + 1, subset.clone)
+    end
+  end
+
+  dfs.call(0, [])
+  result.uniq(&:sort)
+end
+
 def combination_sum(candidates, target)
   result = []
   dfs([], 0, result, candidates, target)
@@ -22,7 +45,6 @@ def dfs(current, k, result, candidates, target)
   current.pop
   dfs(current, k + 1, result, candidates, target)
 end
-
 
 def combination_sum_nested(candidates, target)
   @result = [] # ANKI: Nested functions can only access instance variables
