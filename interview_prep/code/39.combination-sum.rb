@@ -1,7 +1,8 @@
 # @param {Integer[]} candidates
 # @param {Integer} target
 # @return {Integer[][]}
-def combination_sum_aug30(candidates, target)
+# Aug 30th 2024
+def combination_sum(candidates, target)
   # For each n in candidates, generate a set for each n in candidates
   # Add it to result when the set sums to the target
   result = []
@@ -24,7 +25,7 @@ def combination_sum_aug30(candidates, target)
   result.uniq(&:sort)
 end
 
-def combination_sum(candidates, target)
+def combination_sum_old(candidates, target)
   result = []
   dfs([], 0, result, candidates, target)
   result
