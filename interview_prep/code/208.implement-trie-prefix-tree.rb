@@ -1,50 +1,47 @@
+# Simple prefix tre# Simple prefix tre# Simple prefix tree
 class Trie
-  attr_accessor :value, :nodes
+  attr_reader :nodes
+  attr_accessor :value
 
   def initialize
     @nodes = Array.new(26)
-    self.value = nil
+    @value = value
   end
 
   def insert(word)
-    # Decend the tree, creating a node for each character in the input
-    # The final leaf node contains the complete string
     current = self
     word.chars.each do |c|
-      current.nodes[c_to_idx(c)] = Trie.new if current.nodes[c_to_idx(c)].nil?
-      current = current.nodes[c_to_idx(c)]
+      current.nodes[c.to_ord_idx] = Trie.new unless current.nodes[c.to_ord_idx]
+      current = current.nodes[c.to_ord_idx]
     end
+
     current.value = word
   end
 
   def search(word)
-    # Decend the tree, if we arrive at a node with the input
-    # set as value, then the Trie contains that word
     current = self
     word.chars.each do |c|
-      current = current.nodes[c_to_idx(c)]
-      return false if current.nil?
+      current = current.nodes[c.to_ord_idx]
+      return false unless current
     end
+
     current.value == word
   end
 
   def starts_with(prefix)
-    # Much the same as search, but we don't need the
-    # Trie to contain the word, just it's characters
     current = self
     prefix.chars.each do |c|
-      current = current.nodes[c_to_idx(c)]
-      return false if current.nil?
+      current = current.nodes[c.to_ord_idx]
+      return false unless current
     end
+
     true
   end
+end
 
-  private
-
-  # Convert a character to int
-  # For using ASCII chars as array index, i.e. a = 0, z = 25
-  def c_to_idx(c)
-    c.ord - 97
+class String
+  def to_ord_idx
+    ord - 97
   end
 end
 
