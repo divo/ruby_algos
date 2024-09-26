@@ -30,19 +30,22 @@ class MaxHeap
       return
     end
 
-    new_node = insert_value(dfs_empty, value)
+    new_node = insert_value(bfs_empty, value)
     balance(new_node)
   end
 
   # private
 
-  def dfs_empty(current = @heap)
-    return current if current.left.nil? || current.right.nil?
+  def bfs_empty
+    queue = [@heap]
+    until queue.empty?
+      current = queue.shift
+      return current if current.left.nil? || current.right.nil?
 
-    dfs_empty(current.left)
+      queue << current.left << current.right
+    end
   end
 
-  # TODO: Clean this up
   def insert_value(node, value)
     child_node = Node.new(value, node)
     node.left.nil? ? node.left = child_node : node.right = child_node
@@ -80,4 +83,10 @@ heap.add(4)
 heap.add(5)
 heap.add(8)
 heap.add(2)
+
+heap.add(3)
+heap.add(5)
+heap.add(10)
+heap.add(9)
+heap.add(4)
 pp heap
