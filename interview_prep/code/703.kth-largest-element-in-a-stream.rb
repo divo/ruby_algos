@@ -3,11 +3,16 @@
 
 class KthLargest
   def initialize(k, nums)
-    @heap = MaxHeap(nums, k)
+    @heap = MaxHeap.new(nums)
+    @k = k
   end
 
   # Return kth largest element
-  def add(val); end
+  def add(val)
+    @heap.add(val)
+    @k.times { @heap.pop }
+    @heap.root
+  end
 end
 
 # Your KthLargest object will be instantiated and called as such:
@@ -18,7 +23,11 @@ end
 class MaxHeap
   def initialize(nums = [])
     @heap = nil
-    nums.each { |n| @heap.add(n) }
+    nums.each { |n| add(n) }
+  end
+
+  def root
+    @heap.value
   end
 
   def add(value)
@@ -37,16 +46,10 @@ class MaxHeap
     # Replace the root value with marked node value
     @heap.value = marked_node.value
     # Remove the marked node by deleting it's parent value
-    if marked_node.parent.left == marked_node
-      marked_node.parent.left = nil
-    else
-      marked_node.parent.right = nil
-    end
+    marked_node.parent.left == marked_node ? marked_node.parent.left = nil : marked_node.parent.right = nil
     marked_node.parent = nil
 
     balance_top(@heap)
-    require 'byebug'
-    byebug
   end
 
   # private
@@ -86,11 +89,14 @@ class MaxHeap
 
   def find_bottom_right
     queue = [[@heap]]
+    previous_level = nil
     until queue.empty?
       level = queue.pop
+      return previous_level.last if level.all?(nil)
       return level.compact.last if level.include?(nil)
 
       queue << level.map { |node| [node.left, node.right] }.flatten
+      previous_level = level
     end
   end
 end
@@ -114,18 +120,11 @@ class Node
 end
 
 require 'byebug'
-byebug
-heap = MaxHeap.new
-heap.add(4)
-heap.add(5)
-heap.add(8)
-heap.add(2)
-
+heap = KthLargest.new(3, [4, 5, 8, 2])
 heap.add(3)
+byebug
 heap.add(5)
 heap.add(10)
 heap.add(9)
 heap.add(4)
-pp heap.find_bottom_right
-heap.pop
 pp heap
