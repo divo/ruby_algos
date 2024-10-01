@@ -4,34 +4,18 @@
 # l: 4
 # r: 6
 # mid: 5
+# Need to find the minimum, which probably means storing it temporarly
+# In each iteration, we want to drop the unsorted section of the array
+# If mid > right, move left to mid + 1
+# else move right to mid
 def find_min(nums)
-  left, right = 0, nums.length - 1
-  result = nums[left]
+  condition = ->(mid, right) { nums[mid] > nums[right] }
 
-  while left <= right do
-    if nums[left] < nums[right]
-      return [result, nums[left]].min # What?
-    end
-
-    mid = (left + right) / 2
-    result = [result, nums[mid]].min
-
-    if nums[mid] >= nums[left]
-      left = mid + 1
-    else
-      right = mid - 1
-    end
-  end
-
-  result
-end
-
-def find_min_wrong(nums)
   left, right = 0, nums.length - 1
   while left < right
-    mid = (right + left) / 2
-    if nums[left] > nums[right]
-      left = mid
+    mid = left + (right - left) / 2
+    if condition.call(mid, right)
+      left = mid + 1
     else
       right = mid
     end

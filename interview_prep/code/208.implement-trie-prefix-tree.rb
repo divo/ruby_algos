@@ -1,44 +1,47 @@
+# Simple prefix tre# Simple prefix tre# Simple prefix tree
 class Trie
+  attr_reader :nodes
   attr_accessor :value
-  attr_accessor :nodes
-  
 
-  def initialize()
+  def initialize
     @nodes = Array.new(26)
-    self.value = nil
+    @value = value
   end
 
   def insert(word)
     current = self
     word.chars.each do |c|
-      current.nodes[c_to_idx(c)] = Trie.new() if current.nodes[c_to_idx(c)].nil?
-      current = current.nodes[c_to_idx(c)]
+      current.nodes[c.to_ord_idx] = Trie.new unless current.nodes[c.to_ord_idx]
+      current = current.nodes[c.to_ord_idx]
     end
+
     current.value = word
   end
 
   def search(word)
     current = self
     word.chars.each do |c|
-      current = current.nodes[c_to_idx(c)]
-      return false if current.nil?
+      current = current.nodes[c.to_ord_idx]
+      return false unless current
     end
+
     current.value == word
   end
 
   def starts_with(prefix)
     current = self
     prefix.chars.each do |c|
-      current = current.nodes[c_to_idx(c)]
-      return false if current.nil?
+      current = current.nodes[c.to_ord_idx]
+      return false unless current
     end
+
     true
   end
+end
 
-  private 
-
-  def c_to_idx(c)
-    return c.ord - 97
+class String
+  def to_ord_idx
+    ord - 97
   end
 end
 

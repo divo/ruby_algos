@@ -17,6 +17,9 @@
 # @param {ListNode} head
 # @return {ListNode}
 # 3 -> 4 -> 5
+# [1, 2, 3, 4, 5]
+# []
+# Navigate down the list setting next to the previous element
 def reverse_list(head)
   do_reverse(head, nil)
 end

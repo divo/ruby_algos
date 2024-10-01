@@ -9,7 +9,23 @@
 # end
 # @param {TreeNode} root
 # @return {Integer[][]}
+# Redo for practise, came up with a cleaner solution
 def level_order(root)
+  # Use DFS to build a map indexed by level
+  map = Hash.new { |h, k| h[k] = [] }
+  dfs_index(root, 0, map)
+  map.values
+end
+
+def dfs_index(root, level, map)
+  return unless root
+
+  map[level] << root.val
+  dfs_index(root.left, level + 1, map)
+  dfs_index(root.right, level + 1, map)
+end
+
+def level_order_first_attempt(root)
   return [] unless root
 
   result = [[root]]
