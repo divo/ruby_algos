@@ -4,12 +4,13 @@
 # s 1
 # m 6
 def max_sub_array(nums)
-  max = -100000000
   sum = 0
-  nums.each do |num|
-    sum += num
-    max = [sum, max].max
-    sum = 0 if sum <= 0
+  #  nums.each do |num|
+  #    sum = [sum, 0].max + num
+  #    max = [sum, max].max
+  #  end
+  nums.reduce(nums.first) do |max, n|
+    sum = [sum, 0].max + n
+    [sum, max].max
   end
-  max
 end
