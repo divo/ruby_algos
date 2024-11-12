@@ -2,20 +2,17 @@
 # Output: 15
 # Input: cost = [1,100,1,1,1,100,1,1,100,1]
 # Output: 6
+# [0, 2, 2, 1]
+# [0, 0, 1, 0]
 
 # @param {Integer[]} cost
 # @return {Integer}
 def min_cost_climbing_stairs(cost)
-  i = cost.length
-  sum = 0
-  until i <= 1
-    if cost[i - 2] <= cost[i - 1]
-      sum += cost[i - 2]
-      i -= 2
-    else
-      sum += cost[i - 1]
-      i -= 1
-    end
+  two = cost.pop
+  one = cost.pop
+  cost.reverse.each do |c|
+    one, two = c + [one, two].min, one
   end
-  sum
+
+  [one, two].min
 end
