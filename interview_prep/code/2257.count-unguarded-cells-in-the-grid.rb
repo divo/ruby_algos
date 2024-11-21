@@ -17,14 +17,16 @@
 # @param {Integer[][]} walls
 # @return {Integer}
 def count_unguarded(m, n, guards, walls)
-  guarded = []
+  grid = Array.new(m) { Array.new(n) }
+  grid = populate_grid(grid, guards, :guard)
+  grid = populate_grid(grid, walls, :wall)
 
   mark_cells = lambda { |i, j, direction|
     return if i < 0 || i >= m || j < 0 || j >= n
 
-    return if guards.include?([i, j]) || walls.include?([i, j])
+    return if grid[i][j] == :wall || grid[i][j] == :guard
 
-    guarded << [i, j] unless guarded.include?([i, j])
+    grid[i][j] = :guarded
 
     case direction
     when :up
@@ -41,7 +43,7 @@ def count_unguarded(m, n, guards, walls)
   # Iterate over the entire grid
   m.times do |i|
     n.times do |j|
-      next unless guards.include?([i, j])
+      next unless grid[i][j] == :guard
 
       mark_cells.call(i - 1, j, :up)
       mark_cells.call(i + 1, j, :down)
@@ -50,7 +52,13 @@ def count_unguarded(m, n, guards, walls)
     end
   end
 
-  (m * n) - guarded.length - guards.length - walls.length
+  grid.flatten.count { |x| x.nil? }
 end
 
-# puts count_unguarded(4, 6, [[0, 0], [1, 1], [2, 3]], [[0, 1], [2, 2], [1, 4]])
+def populate_grid(grid, positions, symbol)
+  positions.each do |i, j|
+    grid[i][j] = symbol
+  end
+
+  grid
+end
