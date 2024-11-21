@@ -21,38 +21,19 @@ def count_unguarded(m, n, guards, walls)
   grid = populate_grid(grid, guards, :guard)
   grid = populate_grid(grid, walls, :wall)
 
-  mark_cells = lambda { |i, j, direction|
-    return if i < 0 || i >= m || j < 0 || j >= n
-
-    return if grid[i][j] == :wall || grid[i][j] == :guard
-
-    grid[i][j] = :guarded
-
-    case direction
-    when :up
-      mark_cells.call(i - 1, j, direction)
-    when :down
-      mark_cells.call(i + 1, j, direction)
-    when :left
-      mark_cells.call(i, j - 1, direction)
-    when :right
-      mark_cells.call(i, j + 1, direction)
-    end
-  }
-
   # Iterate over the entire grid
   m.times do |i|
     n.times do |j|
       next unless grid[i][j] == :guard
 
-      mark_cells.call(i - 1, j, :up)
-      mark_cells.call(i + 1, j, :down)
-      mark_cells.call(i, j - 1, :left)
-      mark_cells.call(i, j + 1, :right)
+      mark_cells(i - 1, j, :up, grid)
+      mark_cells(i + 1, j, :down, grid)
+      mark_cells(i, j - 1, :left, grid)
+      mark_cells(i, j + 1, :right, grid)
     end
   end
 
-  grid.flatten.count { |x| x.nil? }
+  grid.flatten.count(&:nil?)
 end
 
 def populate_grid(grid, positions, symbol)
@@ -61,4 +42,23 @@ def populate_grid(grid, positions, symbol)
   end
 
   grid
+end
+
+def mark_cells(i, j, direction, grid)
+  return if i < 0 || i >= grid.length || j < 0 || j >= grid.first.length
+
+  return if grid[i][j] == :wall || grid[i][j] == :guard
+
+  grid[i][j] = :guarded
+
+  case direction
+  when :up
+    mark_cells(i - 1, j, direction, grid)
+  when :down
+    mark_cells(i + 1, j, direction, grid)
+  when :left
+    mark_cells(i, j - 1, direction, grid)
+  when :right
+    mark_cells(i, j + 1, direction, grid)
+  end
 end
