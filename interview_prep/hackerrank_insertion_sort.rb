@@ -1,26 +1,16 @@
 def insertionSort1(n, arr)
-    # Write your code here
-    i = arr.length - 1
-    x = arr.last
-    
-    until i <= 0
-      if x < arr[i - 1]
-        arr[i] = arr[i - 1]
-      else
-        arr[i] = arr[i - 1]
-        arr[i] = x
-        i = -10
-      end
-      
-      puts arr.join(' ')
-      i -= 1
-    end
-    
-    if i == 0
-      arr[0] = x
-      puts arr.join(' ')
-    end
+  # Write your code here
+  i = arr.length - 1
+  x = arr.last
 
+  while i > 0 && x < arr[i - 1]
+    arr[i] = arr[i - 1]
+    puts arr.join(' ')
+    i -= 1
+  end
+
+  arr[i] = x
+  puts arr.join(' ')
 end
 
 def insertion_sort1(arr)
