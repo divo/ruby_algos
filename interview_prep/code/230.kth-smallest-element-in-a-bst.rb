@@ -11,6 +11,18 @@
 # @param {Integer} k
 # @return {Integer}
 def kth_smallest(root, k)
+  walk_tree(root)[k - 1]
+end
+
+def walk_tree(root, values = [])
+  return values unless root
+
+  walk_tree(root.left, values)
+  values << root.val
+  walk_tree(root.right, values)
+end
+
+def kth_smallest(root, k)
   values = []
   in_order(root, values)
 
@@ -43,10 +55,9 @@ def kth_smallest_way_overcomplicated(root, k)
       stack << [node.left, p]
     end
   end
-  
+
   values[k - 1]
 end
-
 
 def kth_smallest_sorting(root, k)
   values = []
