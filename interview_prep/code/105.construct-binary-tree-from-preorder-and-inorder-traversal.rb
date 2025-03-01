@@ -11,21 +11,23 @@
 # @param {Integer[]} inorder
 # @return {TreeNode}
 def build_tree(preorder, inorder)
-  result = current = next_node = TreeNode.new
+  root = TreeNode.new(preorder.first)
+  return root if preorder.length <= 1
 
-  preorder.each_with_index do |val, index|
-    next_node.val = val
-    if index != preorder.length - 1
-      if current.val != inorder[index]
-        next_node.left = TreeNode.new
-        next_node = next_node.left
-      else
-        current.right = TreeNode.new
-        next_node = current.right
-        current = current.right
-      end
+  preorder[1..].each { |x| insert(root, x, preorder, inorder) }
+  root
+end
+
+def insert(root, val, preorder, inorder)
+  if inorder.index(val) < inorder.index(root.val)
+    if root.left.nil?
+      root.left = TreeNode.new(val)
+    else
+      insert(root.left, val, preorder, inorder)
     end
+  elsif root.right.nil?
+    root.right = TreeNode.new(val)
+  else
+    insert(root.right, val, preorder, inorder)
   end
-
-  result
 end
