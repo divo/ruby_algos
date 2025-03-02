@@ -1,6 +1,34 @@
 # @param {Integer[]} candidates
 # @param {Integer} target
 # @return {Integer[][]}
+# March 2nd 2025
+# @param {Integer[]} candidates
+# @param {Integer} target
+# @return {Integer[][]}
+# [2,3,6,7]
+def combination_sum(candidates, target)
+  result = []
+
+  dfs = lambda do |partial, index|
+    sum = partial.sum
+    return if sum > target
+
+    if sum == target
+      result << partial.clone
+      return
+    end
+
+    (index...candidates.size).each do |i| # This is the line I struggle with
+      partial << candidates[i]
+      dfs.call(partial, i)
+      partial.pop
+    end
+  end
+
+  dfs.call([], 0)
+  result
+end
+
 # Aug 30th 2024
 def combination_sum(candidates, target)
   # For each n in candidates, generate a set for each n in candidates
@@ -22,7 +50,7 @@ def combination_sum(candidates, target)
   end
 
   dfs.call(0, [])
-  result.uniq(&:sort)
+  result.uniq(&:sort) # Not a proper solution!
 end
 
 def combination_sum_old(candidates, target)
