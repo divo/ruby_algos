@@ -29,13 +29,11 @@ class Graph
     distances = [1_000_000_000] * @n
     distances[node1] = 0
 
-    pp 'sp'
     until heap.empty?
       distance = heap.next_key
       node = heap.pop
 
       return distance if node == node2
-      next if distance > distances[node]
 
       adjacent[node].each do |end_vertex, dist|
         new_dist = distance + dist
