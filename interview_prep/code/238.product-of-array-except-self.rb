@@ -1,21 +1,23 @@
 # @param {Integer[]} nums
 # @return {Integer[]}
 # O(n) time and O(1) space (result does not count towards space complexity)
+# O(n) time and O(1) space (result does not count towards space complexity)
 def product_except_self(nums)
-  output = []
-  # Compute the prefix of products for each element
+  result = []
+  # compute the prefix of products for each element
   total_product = 1
   nums.each do |num|
-    output << total_product
+    result << total_product
     total_product *= num
   end
 
+  # Reverse the iteration and compute the suffix sums
   total_product = 1
   (nums.length - 1).downto(0) do |idx|
-    output[idx] = total_product * output[idx]
+    result[idx] = total_product * result[idx]
     total_product *= nums[idx]
   end
-  output
+  result
 end
 
 def product_except_selfnpow2(nums)
