@@ -1,5 +1,62 @@
 # @param {Integer[][]} grid
 # @return {Integer}
+# 14/03/25
+# I tried and failed to do this quesitons again, going down a wrong path
+# Dissapointing considering I got this question with no issue over a YEAR AGO
+def oranges_rotting(grid)
+  # Count the number of steps needed to rot all the rotten fruits neighbours
+  # Walk the grid and rot all the rotten fruits neighbours
+  # Stop when there is nothing left to rot, or we have an isolated subregion
+
+  count = count_rotten(grid)
+  result = 0
+  loop do
+    rot_grid(grid)
+    # Stop if there is nothing left to rot
+    new_count = count_rotten(grid)
+    break if new_count == count
+
+    count = new_count
+    result += 1
+  end
+
+  # Check if there is any fruit that was not able to rot
+  return -1 if grid.flatten.any?(1)
+
+  result
+end
+
+def count_rotten(grid)
+  grid.flatten.count(2)
+end
+
+def rot_grid(grid)
+  # Walk the grid and rot anything that has a rotten neighbout
+  nodes_to_rot = []
+  grid.each_with_index do |row, i|
+    row.each_with_index do |val, j|
+      nodes_to_rot << [i, j] if val == 2
+    end
+  end
+
+  nodes_to_rot.each { |row, col| rot_neighbors(grid, row, col) }
+end
+
+def rot_neighbors(grid, row, col)
+  rot(grid, row + 1, col)
+  rot(grid, row - 1, col)
+  rot(grid, row, col + 1)
+  rot(grid, row, col - 1)
+end
+
+def rot(grid, row, col)
+  return if row < 0 || row >= grid.length || col < 0 || col >= grid.first.length
+
+  return unless grid[row][col] == 1
+
+  grid[row][col] = 2
+end
+
 def oranges_rotting(grid)
   ticks = 0
   fresh_count = count_fresh(grid)
@@ -25,9 +82,7 @@ def rot_grid(grid)
   rotten = []
   grid.each_with_index do |row, i|
     row.each_with_index do |val, j|
-      if val == 2
-        rotten << [i, j]
-      end
+      rotten << [i, j] if val == 2
     end
   end
 
