@@ -1,9 +1,29 @@
 # @param {Integer} num_courses
 # @param {Integer[][]} prerequisites
 # @return {Boolean}
+# @param {Integer} num_courses
+# @param {Integer[][]} prerequisites
+# @return {Boolean}
+def can_finish(_num_courses, prerequisites)
+  prereq_map = prerequisites.each_with_object(Hash.new { |h, k| h[k] = [] }) { |(a, b), result| result[a] << b }
+  pp prereq_map
+  # Search each entry in prereq_map for self
+  prereq_map.keys.each do |key|
+    queue = prereq_map[key]
+    until queue.empty?
+      current = queue.shift
+      puts "map #{prereq_map[current]}"
+      return false if prereq_map[current].include?(key)
+
+      queue << prereq_map[current] unless prereq_map[current].empty?
+    end
+  end
+
+  true
+end
+
 class Node
-  attr_accessor :children
-  attr_accessor :value
+  attr_accessor :children, :value
 
   def initialize(value)
     @children = []
@@ -43,4 +63,3 @@ def cycle_free(num, graph_map, path)
   current.children.map { |node| cycle_free(node.value, graph_map, path.dup) }
          .all?(true) && true
 end
-
