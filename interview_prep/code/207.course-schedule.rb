@@ -16,9 +16,11 @@ def can_finish(num_courses, prerequisites)
   @discovered = []
 
   # DFS the adjacency list
-  !num_courses.times.map do |n|
-    cycle?(n)
-  end.any?
+  num_courses.times do |n|
+    return false if cycle?(n)
+  end
+
+  true
 end
 
 # DFS from root and
