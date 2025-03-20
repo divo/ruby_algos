@@ -16,8 +16,8 @@ def can_finish(num_courses, prerequisites)
   @discovered = []
 
   # DFS the adjacency list
-  num_courses.times.map do |n|
-    cycle?(n, @graph)
+  !num_courses.times.map do |n|
+    cycle?(n)
   end.any?
 end
 
@@ -27,7 +27,7 @@ def cycle?(root)
 
   @discovered[root] = true
   @graph[root].each do |adjacent|
-    return true if has_cycle?(adjacent) # Easy way to return early from a recursive call
+    return true if cycle?(adjacent) # Easy way to return early from a recursive call
   end
 
   @processed[root] = true
