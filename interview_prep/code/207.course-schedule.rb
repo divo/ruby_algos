@@ -11,29 +11,26 @@
 def can_finish(num_courses, prerequisites)
   # DFS the pre-prequisites and stop if we encounter any nodes that are discovered but not processed
   # First construct an adjacency list we can process
-  adjacent = prerequisites.each_with_object(Hash.new { |h, k| h[k] = [] }) { |(a, b), result| result[a] << b }
-  pp adjacent
+  @graph = prerequisites.each_with_object(Hash.new { |h, k| h[k] = [] }) { |(a, b), result| result[a] << b }
+  @processed = []
+  @discovered = []
 
   # DFS the adjacency list
-  result = catch(:has_cycle) do
-    num_courses.times do |n|
-      has_cycle?(n, adjacent)
-    end
-    false
-  end
-
-  !result
+  num_courses.times.map do |n|
+    cycle?(n, @graph)
+  end.any?
 end
 
-def has_cycle?(root, graph, processed = [], discovered = [])
-  throw :has_cycle, true if discovered[root] && !processed[root]
+# DFS from root and
+def cycle?(root)
+  return true if @discovered[root] && !@processed[root]
 
-  discovered[root] = true
-  graph[root].each do |adjacent|
-    has_cycle?(adjacent, graph, processed, discovered)
+  @discovered[root] = true
+  @graph[root].each do |adjacent|
+    return true if has_cycle?(adjacent) # Easy way to return early from a recursive call
   end
 
-  processed[root] = true
+  @processed[root] = true
   false
 end
 
