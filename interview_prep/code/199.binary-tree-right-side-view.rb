@@ -10,9 +10,23 @@
 # @param {TreeNode} root
 # @return {Integer[]}
 def right_side_view(root)
+  @layers = Hash.new { |h, k| h[k] = [] }
+  dfs(root)
+  @layers.values.map(&:last)
+end
+
+def dfs(root, depth = 0)
+  return unless root
+
+  @layers[depth] << root.val
+  dfs(root.left, depth + 1)
+  dfs(root.right, depth + 1)
+end
+
+def right_side_view(root)
   return [] unless root
 
-  levels = Hash.new { |h, k| h[k] = [] } 
+  levels = Hash.new { |h, k| h[k] = [] }
   map_levels(root, levels)
   levels.map { |_, values| values.last }
 end
