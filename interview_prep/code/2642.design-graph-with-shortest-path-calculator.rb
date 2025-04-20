@@ -23,7 +23,10 @@ class Graph
   #     :type node2: Integer
   #     :rtype: Integer
   def shortest_path(node1, node2)
-    adjacent = build_adj_list
+    adjacent = @edges.each_with_object(Array.new(@n) { [] }) do |(from, to, cost), adjacent|
+      adjacent[from] << [to, cost]
+    end
+
     heap = Containers::MinHeap.new
     heap.push(0, node1)
     distances = [1_000_000_000] * @n

@@ -4,7 +4,6 @@
 # Had to look at solution
 def find_order(num_courses, prerequisites)
   @graph = prerequisites.each_with_object(Hash.new { |h, k| h[k] = [] }) { |(a, b), result| result[a] << b }
-  pp @graph
 
   @result = []
   @processed = []

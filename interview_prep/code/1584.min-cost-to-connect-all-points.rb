@@ -58,7 +58,6 @@ def min_cost_connect_points(points)
     end
   end
 
-  pp adjacent
 
   # Prims
   total_cost = 0
